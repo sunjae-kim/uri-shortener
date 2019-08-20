@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 
 const { shortsRef, getPath } = require('./database');
+const { validateUrl } = require('./service');
 const app = express();
 
 // Automatically allow cross-origin requests
@@ -29,8 +30,12 @@ app.post('/shorten', (req, res) => {
     const { short } = req.body;
     return getPath(short, async data => {
       if (data) return res.status(409).send({ message: `page already exists : ${short}` });
-      await shortsRef.child(short).set(req.body);
-      return res.status(200).send({ message: `sunjae.kim/${short}`, data: req.body });
+
+      const { value, error } = validateUrl(req.body);
+      if (error) return res.status(400).send({ message: error.details[0].message, value: error.details });
+
+      await shortsRef.child(short).set(value);
+      return res.status(200).send({ message: `sunjae.kim/${short}`, value });
     });
   } catch (error) {
     console.log(error.message);
