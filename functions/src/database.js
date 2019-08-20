@@ -14,8 +14,7 @@ const getShort = (path, callback) => {
     return shortsRef.child(path).once('value', snapshot => {
         callback(snapshot.val());
     }, error => {
-        console.error(error);
-        return res.status(500).send('Oh no! Error: ' + error);
+        return res.status(500).send({ message: error });
     });
 };
 

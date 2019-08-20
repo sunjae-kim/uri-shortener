@@ -12,7 +12,7 @@ const getList = (req, res) => {
 const toShort = (req, res) => {
     return getShort(req.params.path, data => {
         if (data) return res.redirect(data.originalUrl);
-        return res.status(404).send({ message: `page not exists : ${req.params.path}` })
+        return res.status(404).send({ message: `page not exists : ${req.params.path}` });
     })
 }
 
@@ -26,13 +26,22 @@ const shorten = (req, res) => {
             if (data) return res.status(409).send({ message: `page already exists : ${short}` });
 
             await shortsRef.child(short).set(value);
-            return res.status(200).send({ message: `sunjae.kim/${short}`, value });
+            return res.status(200).send({ message: `${short}`, value });
         });
     } catch (error) {
         return res.status(500).send({ message: error });
     }
 }
 
+const deleteShort = (req, res) => {
+    const { path } = req.params;
+    return getShort(path, async data => {
+        if (!data) return res.status(404).send({ message: `page already not exists : ${path}` });
+        await shortsRef.child(path).remove()
+        return res.status(200).send({ message: `page deleted: ${path}`});
+    })
+}
+
 module.exports = {
-    getList, toShort, shorten,
+    getList, toShort, shorten, deleteShort,
 }
