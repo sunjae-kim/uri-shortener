@@ -1,9 +1,10 @@
+require('dotenv').config();
 const admin = require('firebase-admin');
-const serviceAccount = require('/Users/jason/.gcloud/jason-serverless-shortener-firebase-adminsdk-p5wmj-4ae3528976.json');
 
+const serviceAccount = require(process.env.FIREBASE_KEY_PATH);
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://jason-serverless-shortener.firebaseio.com/"
+    databaseURL: process.env.FIREBASE_DATABASE_URL,
 });
 
 const db = admin.database();

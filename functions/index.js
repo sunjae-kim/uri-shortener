@@ -31,7 +31,7 @@ app.post('/shorten', (req, res) => {
       if (data) return res.status(409).send({ message: `page already exists : ${short}` });
       await shortsRef.child(short).set(req.body);
       return res.status(200).send({ message: `sunjae.kim/${short}`, data: req.body });
-    })
+    });
   } catch (error) {
     console.log(error.message);
     return response.status(500).send('Oh no! Error: ' + error);
