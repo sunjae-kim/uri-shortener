@@ -1,7 +1,7 @@
 const functions = require('firebase-functions');
 const express = require('express');
 const cors = require('cors');
-const route = require('./src/route');
+const route = require('./src/routes');
 const app = express();
 
 // Automatically allow cross-origin requests
