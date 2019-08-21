@@ -6,4 +6,6 @@ slack-hubot 과 함께 사용하도록 만들어졌습니다. 어뷰징을 막�
 
 ### 사용 예시
 
-![동작캡처](https://user-images.githubusercontent.com/40228715/63333178-ef99cc00-c373-11e9-933e-66df0b4e9956.png)
+![동작캡처](https://user-images.githubusercontent.com/40228715/63393446-1a2c6900-c3f6-11e9-8da3-f3a2eddf8cbc.png)
+
+→ [sunjae.kim/github](http://sunjae.kim/github)
