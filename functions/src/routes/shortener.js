@@ -1,5 +1,5 @@
 const { shortsRef, getShort } = require('../database');
-const { validateUrl } = require('../service');
+const { validateUrl, validateShort } = require('../service');
 
 const getList = (req, res) => {
     return shortsRef.once('value', snapshot => {
@@ -10,16 +10,20 @@ const getList = (req, res) => {
 }
 
 const toShort = (req, res) => {
-    return getShort(req.params.path, data => {
+    const { path } = req.params;
+    const { value, error } = validateShort().validate(path);
+    if (error) return res.status(404).send({ message: error.details[0].message });
+
+    return getShort(value, data => {
         if (data) return res.redirect(301, data.originalUrl);
-        return res.status(404).send({ message: `page not exists : ${req.params.path}` });
+        return res.status(404).send({ message: `page not exists : ${path}` });
     })
 }
 
 const shorten = (req, res) => {
     try {
         const { value, error } = validateUrl(req.body);
-        if (error) return res.status(400).send({ message: error.details[0].message, value: error.details });
+        if (error) return res.status(400).send({ message: error.details[0].message });
 
         const { short } = req.body;
         return getShort(short, async data => {
