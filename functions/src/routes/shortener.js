@@ -11,7 +11,7 @@ const getList = (req, res) => {
 
 const toShort = (req, res) => {
     return getShort(req.params.path, data => {
-        if (data) return res.redirect(data.originalUrl);
+        if (data) return res.redirect(301, data.originalUrl);
         return res.status(404).send({ message: `page not exists : ${req.params.path}` });
     })
 }
