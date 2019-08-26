@@ -27,8 +27,10 @@ slack-hubot 과 함께 사용하도록 만들어졌습니다. 어뷰징을 막�
     ```
 
 3. Set firebase service_account file at `functions/service_account.json`
-    
+  
     - Firebase Console  →  Settings  →  Service accounts  →  Generate new private key
+
+
 
 ### Start
 
@@ -45,3 +47,49 @@ slack-hubot 과 함께 사용하도록 만들어졌습니다. 어뷰징을 막�
     # or
     $ cd functions && npm run deploy
     ```
+
+---
+
+## API
+
+### Available Methods
+
+| Endpoint | Method | Action                     |
+| -------- | ------ | -------------------------- |
+| /        | GET    | Respond all shortened list |
+| /:path   | GET    | Redirect to `path`         |
+| /:path   | DELETE | Delete shortened url       |
+| /shorten | POST   | Shorten url to given path  |
+
+
+
+### Details
+
+#### `DELETE /:path`
+
+Delete shortened url mapping to `path`.
+
+Hubot API token required to send request.
+
+Request example:
+
+```bash
+$ curl -H 'Hubot-Slack-Token: <HUBOT SLACK TOKEN>' --request DELETE https://firebase-url.com/path
+```
+
+
+
+#### `POST /shorten`
+
+Shorten url to given path.
+
+Hubot API token and data required to send request.
+
+Request example:
+
+```bash
+$ curl -H 'Hubot-Slack-Token: <HUBOT SLACK TOKEN>' --request POST --data '"originalUrl": "https://example.com", "short": "example", "author": "John Doe"}' https://firebase-url.com/shorten
+```
+
+---
+
