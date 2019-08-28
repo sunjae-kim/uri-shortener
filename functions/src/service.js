@@ -11,6 +11,7 @@ const validateUrl = shorten => {
       originalUrl: Joi.string().uri().required(),
       short: validateShort(),
       author: Joi.string().required(),
+      createdAt: Joi.date().default(new Date),
     };
     return Joi.validate(shorten, schema);
 };

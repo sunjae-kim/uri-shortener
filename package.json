@@ -1,0 +1,46 @@
+{
+  "name": "tisha.me",
+  "version": "1.0.0",
+  "description": "개인 귀요미 url shortener 입니다",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production",
+    "start": "webpack-dev-server --mode development --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sunjae-Kim/firebase-url-shortener.git"
+  },
+  "keywords": [
+    "vue",
+    "firebase"
+  ],
+  "author": "jason",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sunjae-Kim/firebase-url-shortener/issues"
+  },
+  "homepage": "https://github.com/Sunjae-Kim/firebase-url-shortener#readme",
+  "dependencies": {
+    "dotenv-webpack": "^1.7.0",
+    "firebase": "^6.4.2",
+    "vue": "^2.6.10"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "babel-loader": "^8.0.2",
+    "css-loader": "^3.2.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "style-loader": "^1.0.0",
+    "vue-loader": "^15.7.1",
+    "vue-template-compiler": "^2.6.10",
+    "vue-template-loader": "^1.0.0",
+    "webpack": "^4.19.1",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.8"
+  }
+}

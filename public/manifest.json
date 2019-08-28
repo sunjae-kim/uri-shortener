@@ -1,0 +1,16 @@
+{
+  "short_name": "Tisha.me",
+  "name": "Tisha.me! Url Shortener",
+  "icons": [
+    {
+      "src": "memo.png",
+      "sizes": "144x144",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#FAFAFA",
+  "background_color": "#FAFAFA",
+  "orientation": "portrait"
+}
