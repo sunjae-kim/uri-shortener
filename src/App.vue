@@ -3,15 +3,16 @@
     <form v-on:submit.prevent="createShort">
       <input v-model="url.originalUrl" type="text" placeholder="https://original-url.com"> → 
       <span>tisha.me/</span><input v-model="url.short" type="text" placeholder="short">
-      <button v-on="createShort">Shorten!</button>
+      <button v-on:click="createShort">Shorten!</button>
     </form>
     <hr>
-    <ul>
-      <li v-for="short in shortList" :key="short.originalUrl">
+    <p v-if="shorts.loading">Loading...</p>
+    <ul v-else>
+      <li v-for="short in orderedShorts" :key="short.originalUrl">
         <div>
           <p><span>{{ short.originalUrl }}</span></p>
           &rarr; <span>https://tisha.me/{{ short.short }}</span>
-          <button v-on:click="copyToClipBoard(short.short)">copy</button>
+          <button class="btn" v-bind:data-clipboard-text="'https://tisha.me/' + short.short">copy</button>
         </div>
         <div>Shortened by {{ short.author }}</div>
         <button v-on:click="deleteShort(short.short)">delete</button>
@@ -21,53 +22,46 @@
 </template>
 
 <script>
-import firebase, { db } from './database';
-const shortsRef = db.ref('/shorts');
+import firebase, { shortsRef, TIMESTAMP } from './database';
+import { mapState, mapGetters } from 'vuex';
+import ClipboardJS from 'clipboard'; new ClipboardJS('.btn');
 
 export default {
-  name: "App",
-  data() {
+  data () {
     return {
       url: {
-        originalUrl: "",
-        short: "",
-        createdAt: null,
-      },
-      shortList: {}
-    };
+        originalUrl: '',
+        short: '',
+        author: 'Annonymous',
+        createdAt: TIMESTAMP,
+      }
+    }
   },
-  created () { this.getList(); },
+  name: "App",
+  computed: {
+    ...mapState({
+      shorts: 'shorts',
+    }),
+    ...mapGetters({
+      orderedShorts: 'orderedShorts',
+    })
+  },
+  created () {
+    this.$store.dispatch('bindShorts', shortsRef);
+  },
   methods: {
     createShort: async function () {
-      await shortsRef.child(this.url.short).set({
-        originalUrl: this.url.originalUrl,
-        short: this.url.short,
-        createdAt: firebase.database.ServerValue.TIMESTAMP,
-        author: '김선재',
-      });
+      await shortsRef.child(this.url.short).set(this.url);
       this.url = {
-        originalUrl: "",
-        short: "",
+        originalUrl: '',
+        short: '',
+        author: 'Annonymous',
+        createdAt: TIMESTAMP,
       };
-      this.getList();
     },
-    deleteShort: async function (path) {
-      await shortsRef.child(path).remove();
-      this.getList();
+    deleteShort: function (path) {
+      shortsRef.child(path).remove();
     },
-    getList: async function () {
-      shortsRef.orderByChild('createdAt').once('value', snapshot => {
-        this.shortList = Object.values(snapshot.val()).sort((a, b) => b.createdAt - a.createdAt);
-      });
-    },
-    copyToClipBoard: async function (value) {
-      const tmp = document.createElement("textarea");
-      document.body.appendChild(tmp);
-      tmp.value = `https://tisha.me/${value}`;
-      tmp.select();
-      document.execCommand('copy');
-      document.body.removeChild(tmp);
-    }
   }
 };
 </script>
