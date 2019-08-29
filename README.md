@@ -10,7 +10,7 @@ Firebase 의 Realtime Database + Vue 로 빌드된 url shortener 프로젝트 �
 
 1. Install node modules
     ```bash
-    $ cd functions && npm install
+    $ npm install
     ```
 
 2. Set environment variables
@@ -38,8 +38,7 @@ Firebase 의 Realtime Database + Vue 로 빌드된 url shortener 프로젝트 �
 
 ### Deploy
 
-1. Serve built Application in Local
-    **Do this After build.**
+1. Serve built Application in Local. **Do this After build.**
     ```bash
     $ firebase serve --only hosting
     ```
