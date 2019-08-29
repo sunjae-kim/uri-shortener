@@ -14,6 +14,7 @@ const defaultUrl = () => ({
   originalUrl: '',
   short: '',
   author: '',
+  uid: '',
   createdAt: TIMESTAMP,
 })
 
@@ -31,7 +32,8 @@ export default {
   },
   methods: {
     createShort: async function () {
-      this.url = { ...this.url, author: this.user.data.displayName };
+      const { displayName, uid } = this.user.data;
+      this.url = { ...this.url, author: displayName, uid };
       await shortsRef.child(this.url.short).set(this.url);
       this.url = defaultUrl();
     },
