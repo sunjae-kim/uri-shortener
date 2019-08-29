@@ -7,7 +7,7 @@ const firebaseConfig = {
   projectId: process.env.FIREBASE_PROJECT_ID,
 };
 
-export const db = firebase
+const db = firebase
   .initializeApp(firebaseConfig)
   .database();
 export const shortsRef = db.ref('/shorts');
