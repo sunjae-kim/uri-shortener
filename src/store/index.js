@@ -11,6 +11,14 @@ export default new Vuex.Store({
     shorts: {
       loading: true,
       data: {},
+    },
+    user: {
+      loading: true,
+      data: {
+        uid: '',
+        email: '',
+        displayName: '',
+      }
     }
   },
   actions,
