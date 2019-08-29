@@ -9,7 +9,7 @@
           <button class="btn" v-bind:data-clipboard-text="'https://tisha.me/' + short.short">copy</button>
         </div>
         <div>Shortened by {{ short.author }}</div>
-        <button v-on:click="deleteShort(short.short)">delete</button>
+        <button @click="deleteShort(short.short)">delete</button>
       </li>
     </ul>
   </section>
@@ -20,7 +20,7 @@ import { mapState, mapGetters } from 'vuex';
 import { shortsRef } from '../database';
 
 export default {
-  name: "Shorts",
+  name: 'Shorts',
   computed: {
     ...mapState({
       shorts: 'shorts',

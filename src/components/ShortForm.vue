@@ -1,18 +1,19 @@
 <template>
-  <form v-on:submit.prevent="createShort">
+  <form @submit.prevent="createShort">
     <input v-model="url.originalUrl" type="text" placeholder="https://original-url.com"> → 
     <span>tisha.me/</span><input v-model="url.short" type="text" placeholder="short">
-    <button v-on:click="createShort">Shorten!</button>
+    <button @click="createShort">Shorten!</button>
   </form>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import { TIMESTAMP, shortsRef } from '../database';
 
 const defaultUrl = () => ({
   originalUrl: '',
   short: '',
-  author: 'Annonymous',
+  author: '',
   createdAt: TIMESTAMP,
 })
 
@@ -23,8 +24,14 @@ export default {
       url: defaultUrl(),
     }
   },
+  computed: {
+    ...mapState({
+      user: 'user',
+    })
+  },
   methods: {
     createShort: async function () {
+      this.url = { ...this.url, author: this.user.data.displayName };
       await shortsRef.child(this.url.short).set(this.url);
       this.url = defaultUrl();
     },
