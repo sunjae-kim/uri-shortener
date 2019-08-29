@@ -23,7 +23,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebPackPlugin({
-      title: 'URL Shortener',
+      title: 'Tisha.me',
       template: './public/index.html',
       favicon: './public/memo.png',
     }),
