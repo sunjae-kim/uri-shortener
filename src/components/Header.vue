@@ -10,14 +10,14 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import firebase from "../database";
+import { mapState } from 'vuex';
+import firebase from '../database';
 
 export default {
-  name: "Header",
+  name: 'Header',
   computed: {
     ...mapState({
-      user: "user"
+      user: 'user'
     })
   },
   mounted() {
@@ -33,16 +33,16 @@ export default {
         if (user) {
           const { uid, email, displayName } = user;
           const userData = { uid, email, displayName };
-          this.$store.dispatch("setUser", userData);
-          this.$store.dispatch("setUserLoading", false);
+          this.$store.dispatch('setUser', userData);
+          this.$store.dispatch('setUserLoading', false);
         } else {
-          this.$store.dispatch("setUserLoading", false);
+          this.$store.dispatch('setUserLoading', false);
         }
       });
     },
     async signOut() {
       await firebase.auth().signOut();
-      this.$store.dispatch("clearUser");
+      this.$store.dispatch('clearUser');
     }
   }
 };
