@@ -26,15 +26,16 @@
   "homepage": "https://github.com/Sunjae-Kim/firebase-url-shortener#readme",
   "dependencies": {
     "clipboard": "^2.0.4",
-    "firebase": "^6.4.2",
+    "firebase": "^6.5.0",
+    "joi": "^14.3.1",
     "vue": "^2.6.10",
     "vuex": "^3.1.1",
     "vuexfire": "^3.1.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.0",
-    "@babel/preset-env": "^7.1.0",
-    "babel-loader": "^8.0.2",
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
     "dotenv-webpack": "^1.7.0",
     "html-loader": "^0.5.5",
@@ -43,8 +44,8 @@
     "vue-loader": "^15.7.1",
     "vue-template-compiler": "^2.6.10",
     "vue-template-loader": "^1.0.0",
-    "webpack": "^4.19.1",
-    "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.8"
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.7",
+    "webpack-dev-server": "^3.8.0"
   }
 }

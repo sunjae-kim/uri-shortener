@@ -25,6 +25,7 @@ export default {
   },
   methods: {
     signInWithGoogle() {
+      this.$store.dispatch('setUserLoading', true);
       const provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithRedirect(provider);
     },
@@ -41,6 +42,7 @@ export default {
       });
     },
     async signOut() {
+      this.$store.dispatch('setUserLoading', true);
       await firebase.auth().signOut();
       this.$store.dispatch('clearUser');
     }
