@@ -29,5 +29,8 @@ module.exports = {
     }),
     new VueLoaderPlugin(),
     new Dotenv()
-  ]
+  ],
+  node: {
+    net: 'empty',
+  }
 };

@@ -8,7 +8,7 @@
             <span>{{ short.originalUrl }}</span>
           </p>&rarr;
           <span>https://tisha.me/{{ short.short }}</span>
-          <button class="btn" v-bind:data-clipboard-text="'https://tisha.me/' + short.short">copy</button>
+          <button class="btn" :data-clipboard-text="'https://tisha.me/' + short.short">copy</button>
         </div>
         <div>Shortened by {{ short.author }}</div>
         <button v-if="isOwnShort(short.uid)" @click="deleteShort(short.short)">delete</button>
