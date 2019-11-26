@@ -30,7 +30,6 @@ module.exports = {
     new VueLoaderPlugin(),
     new Dotenv()
   ],
-  node: {
-    net: 'empty',
-  }
+  // To use Joi cliend side: https://tisha.me/joi-issue
+  node: { net: 'empty' },
 };
