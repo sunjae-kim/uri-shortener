@@ -14,5 +14,4 @@ const db = firebase
   .database();
 export const shortsRef = db.ref('/shorts');
 export const { database: { ServerValue: { TIMESTAMP } } } = firebase;
-
 export default firebase;

@@ -19,7 +19,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
-import { shortsRef } from '../database';
+import { shortsRef } from '@/database';
 
 export default {
   name: 'Shorts',

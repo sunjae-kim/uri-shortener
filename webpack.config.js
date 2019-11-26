@@ -1,6 +1,7 @@
-const VueLoaderPlugin = require("vue-loader/lib/plugin");
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const path = require('path');
 
 module.exports = {
   entry: ['./src/main.js'],
@@ -18,7 +19,10 @@ module.exports = {
     ]
   },
   resolve: {
-    alias: { "vue$": "vue/dist/vue.esm.js" },
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js',
+      '@': path.resolve(__dirname, 'src/')
+    },
     extensions: ['*', '.js', '.vue', '.json']
   },
   plugins: [

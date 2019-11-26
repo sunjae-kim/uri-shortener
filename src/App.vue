@@ -11,12 +11,12 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import ClipboardJS from 'clipboard'; new ClipboardJS('.btn');
-import { shortsRef } from './database';
-import ShortForm from './components/ShortForm.vue';
-import Shorts from './components/Shorts.vue';
-import Header from './components/Header.vue';
+import { shortsRef } from '@/database';
+import ShortForm from '@/components/ShortForm.vue';
+import Shorts from '@/components/Shorts.vue';
+import Header from '@/components/Header.vue';
 
 export default {
   name: 'App',
@@ -25,8 +25,13 @@ export default {
       user: 'user'
     })
   },
-  created () {
-    this.$store.dispatch('bindShorts', shortsRef);
+  methods: {
+    ...mapActions([
+      'bindShorts'
+    ]),
+  },
+  mounted: function() {
+    this.bindShorts(shortsRef);
   },
   components: {
     ShortForm,

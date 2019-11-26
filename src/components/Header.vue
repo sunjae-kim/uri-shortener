@@ -5,47 +5,34 @@
       <span>Welcome! {{ user.data.displayName }}!</span>
       <button @click="signOut">Sign out</button>
     </div>
-    <button v-else id="signin-with-google" @click="signInWithGoogle">Sign in with google</button>
+    <button
+      v-else
+      id="signin-with-google"
+      @click="signInWithGoogle">
+      Sign in with google
+    </button>
   </header>
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import firebase from '../database';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'Header',
   computed: {
-    ...mapState({
-      user: 'user'
-    })
+    ...mapState([
+      'user',
+    ])
   },
-  mounted() {
+  mounted: function() {
     this.onAuthStateChanged();
   },
   methods: {
-    signInWithGoogle() {
-      this.$store.dispatch('setUserLoading', true);
-      const provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().signInWithRedirect(provider);
-    },
-    onAuthStateChanged() {
-      firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-          const { uid, email, displayName } = user;
-          const userData = { uid, email, displayName };
-          this.$store.dispatch('setUser', userData);
-          this.$store.dispatch('setUserLoading', false);
-        } else {
-          this.$store.dispatch('setUserLoading', false);
-        }
-      });
-    },
-    async signOut() {
-      this.$store.dispatch('setUserLoading', true);
-      await firebase.auth().signOut();
-      this.$store.dispatch('clearUser');
-    }
+    ...mapActions([
+      'signOut',
+      'signInWithGoogle',
+      'onAuthStateChanged',
+    ]),
   }
 };
 </script>
