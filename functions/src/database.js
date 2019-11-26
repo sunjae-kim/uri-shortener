@@ -3,21 +3,26 @@ const admin = require('firebase-admin');
 
 const serviceAccount = require('../service_account.json');
 admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: process.env.FIREBASE_DATABASE_URL,
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: process.env.FIREBASE_DATABASE_URL,
 });
 
 const db = admin.database();
 const shortsRef = db.ref('/shorts');
 
 const getShort = (path, callback) => {
-    return shortsRef.child(path).once('value', snapshot => {
-        callback(snapshot.val());
-    }, error => {
-        return res.status(500).send({ message: error });
-    });
+  return shortsRef.child(path).once(
+    'value',
+    snapshot => {
+      callback(snapshot.val());
+    },
+    error => {
+      return res.status(500).send({ message: error });
+    },
+  );
 };
 
 module.exports = {
-    shortsRef, getShort
+  shortsRef,
+  getShort,
 };

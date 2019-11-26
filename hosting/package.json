@@ -1,10 +1,9 @@
 {
   "name": "tisha.me",
   "version": "1.0.0",
-  "description": "개인 귀요미 url shortener 입니다",
+  "description": "the url shortener",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack --mode development",
     "build": "webpack --mode production",
     "start": "webpack-dev-server --mode development --open",
@@ -13,6 +12,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Sunjae-Kim/firebase-url-shortener.git"
+  },
+  "engines": {
+    "node": "12"
   },
   "keywords": [
     "vue",
