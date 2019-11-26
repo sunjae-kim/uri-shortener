@@ -22,20 +22,20 @@ const mutations = {
   clearUser: function(state) {
     state.data = { uid: '', email: '', displayName: '' };
   },
-  setLoading: function(state, loading) {
+  setUserLoading: function(state, loading) {
     state.loading = loading;
   },
 };
 
 const actions = {
   signOut: async function({ commit }) {
-    commit('setLoading', true);
+    commit('setUserLoading', true);
     await firebase.auth().signOut();
     commit('clearUser');
-    commit('setLoading', false);
+    commit('setUserLoading', false);
   },
   signInWithGoogle: function({ commit }) {
-    commit('setLoading', true);
+    commit('setUserLoading', true);
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithRedirect(provider);
   },
@@ -46,7 +46,7 @@ const actions = {
         const userData = { uid, email, displayName };
         commit('setUser', userData);
       }
-      commit('setLoading', false);
+      commit('setUserLoading', false);
     });
   },
 };

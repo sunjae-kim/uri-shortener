@@ -13,7 +13,6 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import ClipboardJS from 'clipboard'; new ClipboardJS('.btn');
-import { shortsRef } from '@/database';
 import ShortForm from '@/components/ShortForm.vue';
 import Shorts from '@/components/Shorts.vue';
 import Header from '@/components/Header.vue';
@@ -31,7 +30,7 @@ export default {
     ]),
   },
   mounted: function() {
-    this.bindShorts(shortsRef);
+    this.bindShorts();
   },
   components: {
     ShortForm,

@@ -1,4 +1,5 @@
 import { firebaseAction } from 'vuexfire';
+import { shortsRef } from '@/database';
 
 const state = {
   loading: true,
@@ -14,15 +15,15 @@ const getters = {
 };
 
 const mutations = {
-  setLoading: function(state, loading) {
+  setShortsLoading: function(state, loading) {
     state.loading = loading;
   },
 };
 
 const actions = {
-  bindShorts: firebaseAction(async (context, shortsRef) => {
+  bindShorts: firebaseAction(async (context) => {
     await context.bindFirebaseRef('data', shortsRef);
-    context.commit('setLoading', false);
+    context.commit('setShortsLoading', false);
   }),
 };
 

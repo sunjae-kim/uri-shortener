@@ -11,7 +11,7 @@
           <button class="btn" :data-clipboard-text="'https://tisha.me/' + short.short">copy</button>
         </div>
         <div>Shortened by {{ short.author }}</div>
-        <button v-if="isOwnShort(short.uid)" @click="deleteShort(short.short)">delete</button>
+        <button @click="deleteShort(short.short)">delete</button>
       </li>
     </ul>
   </section>
@@ -36,9 +36,6 @@ export default {
     deleteShort: function(path) {
       shortsRef.child(path).remove();
     },
-    isOwnShort: function(uid) {
-      return this.user.data.uid === uid;
-    }
   }
 };
 </script>
