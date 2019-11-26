@@ -14,7 +14,7 @@
     "url": "git+https://github.com/Sunjae-Kim/firebase-url-shortener.git"
   },
   "engines": {
-    "node": "12"
+    "node": "10"
   },
   "keywords": [
     "vue",
