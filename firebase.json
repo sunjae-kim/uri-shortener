@@ -6,7 +6,7 @@
     "source": "functions"
   },
   "hosting": {
-    "public": "dist",
+    "public": "hosting/dist",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -17,6 +17,7 @@
         "source": "/**",
         "function": "shortener"
       }
-    ]
+    ],
+    "source": "hosting"
   }
 }
