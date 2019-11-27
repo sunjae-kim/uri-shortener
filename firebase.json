@@ -12,7 +12,7 @@
     "rewrites": [
       {
         "source": "/**",
-        "function": "shortenerAsia"
+        "function": "shortener"
       }
     ]
   }
