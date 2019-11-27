@@ -5,4 +5,4 @@ const app = express();
 
 app.use('/', route);
 
-exports.shortener = functions.https.onRequest(app);
+exports.shortenerAsia = functions.region('asia-northeast1').https.onRequest(app);

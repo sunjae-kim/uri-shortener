@@ -12,9 +12,8 @@
     "rewrites": [
       {
         "source": "/**",
-        "function": "shortener"
+        "function": "shortenerAsia"
       }
-    ],
-    "source": "hosting"
+    ]
   }
 }

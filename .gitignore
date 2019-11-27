@@ -66,6 +66,6 @@ node_modules/
 
 .DS_STORE
 
-service_account.json
+*/service_account.json
 
 dist/
