@@ -4,11 +4,11 @@
   "icons": [
     {
       "src": "memo.png",
-      "sizes": "144x144",
-      "type": "image/x-icon"
+      "purpose": "any",
+      "sizes": "160x160"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "theme_color": "#FAFAFA",
   "background_color": "#FAFAFA",

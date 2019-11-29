@@ -3,6 +3,7 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const Dotenv = require('dotenv-webpack');
 const path = require('path');
+const manifest = require('./public/manifest.json');
 
 module.exports = {
   entry: ['./src/main.js'],
@@ -28,30 +29,12 @@ module.exports = {
   },
   plugins: [
     new HtmlWebPackPlugin({
-      title: 'Tisha.me',
       template: './public/index.html',
       favicon: './public/memo.png',
     }),
     new VueLoaderPlugin(),
     new Dotenv(),
-    new ManifestPlugin({
-      seed: {
-        short_name: 'Tisha.me',
-        name: 'Tisha.me! Url Shortener',
-        icons: [
-          {
-            src: 'memo.png',
-            sizes: '144x144',
-            type: 'image/x-icon',
-          },
-        ],
-        start_url: '.',
-        display: 'standalone',
-        theme_color: '#FAFAFA',
-        background_color: '#FAFAFA',
-        orientation: 'portrait',
-      },
-    }),
+    new ManifestPlugin({ seed: manifest }),
   ],
   // To use Joi cliend side: https://tisha.me/joi-issue
   node: { net: 'empty' },
