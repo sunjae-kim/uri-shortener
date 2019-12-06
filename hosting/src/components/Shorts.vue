@@ -8,7 +8,7 @@
             <span>{{ short.originalUrl }}</span>
           </p>&rarr;
           <span>https://tisha.me/{{ short.short }}</span>
-          <button class="btn" :data-clipboard-text="'https://tisha.me/' + short.short">copy</button>
+          <button class="copy_btn" :data-clipboard-text="'https://tisha.me/' + short.short">copy</button>
         </div>
         <div>Shortened by {{ short.author }}</div>
         <button @click="deleteShort(short.short)">delete</button>
@@ -26,7 +26,6 @@ export default {
   computed: {
     ...mapState({
       shorts: 'shorts',
-      user: 'user',
     }),
     ...mapGetters({
       orderedShorts: 'orderedShorts'

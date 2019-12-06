@@ -2,7 +2,7 @@
   <div id="app">
     <Header />
     <hr>
-    <div v-if="user.data.uid">
+    <div v-if="isLoggedIn">
       <ShortForm />
       <hr>
       <Shorts />
@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
-import ClipboardJS from 'clipboard'; new ClipboardJS('.btn');
+import { mapActions, mapGetters } from 'vuex';
+import ClipboardJS from 'clipboard';
 import ShortForm from '@/components/ShortForm.vue';
 import Shorts from '@/components/Shorts.vue';
 import Header from '@/components/Header.vue';
@@ -20,9 +20,9 @@ import Header from '@/components/Header.vue';
 export default {
   name: 'App',
   computed: {
-    ...mapState({
-      user: 'user'
-    })
+    ...mapGetters([
+      'isLoggedIn',
+    ])
   },
   methods: {
     ...mapActions([
@@ -31,6 +31,7 @@ export default {
   },
   mounted: function() {
     this.bindShorts();
+    new ClipboardJS('.copy_btn');
   },
   components: {
     ShortForm,

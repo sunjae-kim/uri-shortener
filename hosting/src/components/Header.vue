@@ -1,7 +1,7 @@
 <template>
   <header v-if="user.loading">Loading...</header>
   <header v-else>
-    <div v-if="user.data.uid">
+    <div v-if="isLoggedIn">
       <span>Welcome! {{ user.data.displayName }}!</span>
       <button @click="signOut">Sign out</button>
     </div>
@@ -15,13 +15,13 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'Header',
   computed: {
-    ...mapState([
-      'user',
+    ...mapGetters([
+      'isLoggedIn',
     ])
   },
   mounted: function() {

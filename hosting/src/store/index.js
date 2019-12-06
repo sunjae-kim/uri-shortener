@@ -6,8 +6,6 @@ import { vuexfireMutations } from 'vuexfire';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  mutations: {
-    ...vuexfireMutations,
-  },
+  mutations: vuexfireMutations,
   modules,
 });
