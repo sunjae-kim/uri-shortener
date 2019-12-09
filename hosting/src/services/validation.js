@@ -2,7 +2,7 @@ import Joi from 'joi';
 
 export const validateUrl = () => {
   return Joi.string().required().trim().regex(/^[^.[\]#$ ]+$/).error(() => {
-    return { message: '".", "[", "]", "#", "$", " " 문자는 사용하실 수 없습니다.' }
+    return { message: '키워드에 . [ ] # $ 및 공백 문자는 사용하실 수 없습니다' }
   });
 }
 

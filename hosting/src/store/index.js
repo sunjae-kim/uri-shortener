@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import modules from './modules';
 import { vuexfireMutations } from 'vuexfire';
+import modules from './modules';
 
 Vue.use(Vuex);
 

@@ -1,50 +1,34 @@
 <template>
   <section id="shorts">
-    <p v-if="shorts.loading">Loading...</p>
-    <ul v-else>
-      <li v-for="short in orderedShorts" :key="short.createdAt">
-        <div>
-          <p>
-            <span>{{ short.originalUrl }}</span>
-          </p>&rarr;
-          <span>https://tisha.me/{{ short.short }}</span>
-          <button class="copy_btn" :data-clipboard-text="'https://tisha.me/' + short.short">copy</button>
-        </div>
-        <div>Shortened by {{ short.author }}</div>
-        <button @click="deleteShort(short.short)">delete</button>
-      </li>
-    </ul>
+    <sui-dimmer v-if="shorts.loading" active inverted>
+      <sui-loader content="Loading..." />
+    </sui-dimmer>
+    <sui-list v-else divided relaxed>
+      <sui-list-item v-for="short in orderedShorts" :key="short.id">
+        <ShortListItem :short="short" />
+      </sui-list-item>
+    </sui-list>
   </section>
 </template>
 
 <script>
 import { mapState, mapGetters } from 'vuex';
-import { shortsRef } from '@/database';
+import ShortListItem from '@/components/ShortListItem.vue';
 
 export default {
   name: 'Shorts',
-  computed: {
-    ...mapState({
-      shorts: 'shorts',
-    }),
-    ...mapGetters({
-      orderedShorts: 'orderedShorts'
-    })
+  components: {
+    ShortListItem
   },
-  methods: {
-    deleteShort: function(path) {
-      shortsRef.child(path).remove();
-    },
+  computed: {
+    ...mapState(['shorts']),
+    ...mapGetters(['orderedShorts'])
   }
 };
 </script>
 
 <style>
-p {
-  margin: 0;
-}
-
-li {
-  margin-bottom: 1rem;
+section#shorts {
+  margin: 3rem 0;
 }
 </style>

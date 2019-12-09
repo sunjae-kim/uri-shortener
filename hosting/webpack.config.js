@@ -14,10 +14,14 @@ module.exports = {
       { test: /\.html$/, use: ['html-loader'] },
       { test: /\.css$/, use: ['style-loader', 'css-loader'] },
       {
-        test: /\.(js)$/,
+        test: /\.js$/,
         resolve: { extensions: ['.js'] },
         exclude: /node_modules/,
         use: ['babel-loader'],
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg|png)(\?v=\d+\.\d+\.\d+)?$/,
+        use: ['file-loader'],
       },
     ],
   },
@@ -31,7 +35,7 @@ module.exports = {
   plugins: [
     new HtmlWebPackPlugin({
       template: './public/index.html',
-      favicon: './public/memo.png',
+      favicon: './public/logo.png',
     }),
     new VueLoaderPlugin(),
     new Dotenv(),
