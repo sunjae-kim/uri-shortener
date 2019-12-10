@@ -3,8 +3,7 @@
     <sui-container id="header" text-align="right">
       <sui-button v-if="isLoggedIn" size="mini" @click="signOut">Sign out</sui-button>
       <h1 size="huge" is="sui-header" icon text-align="center">
-        <sui-image :src="logoImage" size="small" />
-        Tisha.me
+        <sui-image :src="logoImage" size="small" />Tisha.me
       </h1>
     </sui-container>
   </header>

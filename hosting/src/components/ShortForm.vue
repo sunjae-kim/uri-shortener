@@ -1,7 +1,7 @@
 <template>
-  <sui-form id="form" @submit.prevent="createShort">
+  <sui-form id="form" @submit.prevent="onFormSubmit">
     <sui-form-field>
-      <sui-input v-model="data.originalUrl" placeholder="https://original-url.com" />
+      <sui-input v-model="data.originalUrl" placeholder="https://original-uri.com" />
     </sui-form-field>
     <sui-form-field>
       <div class="ui labeled action input">
@@ -14,10 +14,8 @@
 </template>
 
 <script>
-import Swal from 'sweetalert2';
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import { TIMESTAMP, shortsRef } from '@/database';
-import { validateData } from '@/services/validation';
 
 const getDefaultData = () => ({
   originalUrl: '',
@@ -29,42 +27,32 @@ const getDefaultData = () => ({
 
 export default {
   name: 'ShortForm',
-  data() {
-    return {
-      data: getDefaultData()
-    };
-  },
+  data: () => ({
+    data: getDefaultData(),
+  }),
   computed: {
-    ...mapState({
-      user: 'user'
-    })
+    ...mapState(['shorts'])
   },
   methods: {
-    createShort: async function() {
-      const { displayName, uid } = this.user.data;
-      const data = { ...this.data, author: displayName, uid };
-      const { error, value } = validateData(data);
-      if (error) {
-        return Swal.fire({
-          icon: 'error',
-          title: 'Failed',
-          text: '입력한 값이 양식에 맞지 않습니다'
-        });
-      }
-      await shortsRef.child(value.short).set(value);
-      this.data = getDefaultData();
-      Swal.fire({
-        icon: 'success',
-        title: 'tishe.me/' + data.short,
-        text: '성공적으로 생성되었습니다'
-      });
+    ...mapActions(['createShort']),
+    async onFormSubmit() {
+      const isSuccessful = await this.createShort(this.data);
+      if (isSuccessful) this.data = getDefaultData();
     }
   }
 };
 </script>
 <style>
 #form {
-  margin-bottom: 5rem;
+  margin-bottom: 3rem;
   margin-top: 2rem;
+}
+
+/* Message fade */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 2s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>

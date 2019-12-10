@@ -5,7 +5,7 @@ const wrapper = require('../common/wrapper');
 
 const redirect = (req, res) => {
   const { path } = req.params;
-  return getShort(path, data => {
+  return getShort(res, path, data => {
     if (data) return res.redirect(301, data.originalUrl);
     return res.status(404).send({ message: `page not exists : ${path}` });
   });

@@ -10,7 +10,7 @@ admin.initializeApp({
 const db = admin.database();
 const shortsRef = db.ref('/shorts');
 
-const getShort = (path, callback) => {
+const getShort = (res, path, callback) => {
   return shortsRef.child(path).once(
     'value',
     snapshot => {

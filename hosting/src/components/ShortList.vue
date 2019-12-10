@@ -16,7 +16,7 @@ import { mapState, mapGetters } from 'vuex';
 import ShortListItem from '@/components/ShortListItem.vue';
 
 export default {
-  name: 'Shorts',
+  name: 'ShortList',
   components: {
     ShortListItem
   },

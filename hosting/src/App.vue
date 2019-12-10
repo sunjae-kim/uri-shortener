@@ -6,15 +6,15 @@
     <div v-if="isLoggedIn">
       <Header />
       <ShortForm />
-      <Shorts />
+      <ShortList />
     </div>
-    <div id="login" v-else>
+    <div v-else id="login">
       <Header />
       <sui-button
-        @click="signInWithGoogle"
         social="google"
         content="Sign in with Google"
         icon="google"
+        @click="signInWithGoogle"
       />
     </div>
   </sui-container>
@@ -24,7 +24,7 @@
 import { mapState, mapActions, mapGetters } from 'vuex';
 import ClipboardJS from 'clipboard';
 import ShortForm from '@/components/ShortForm.vue';
-import Shorts from '@/components/Shorts.vue';
+import ShortList from '@/components/ShortList.vue';
 import Header from '@/components/Header.vue';
 
 export default {
@@ -43,7 +43,7 @@ export default {
   },
   components: {
     ShortForm,
-    Shorts,
+    ShortList,
     Header
   }
 };

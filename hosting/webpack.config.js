@@ -7,7 +7,7 @@ const path = require('path');
 const manifest = require('./public/manifest.json');
 
 module.exports = {
-  entry: ['./src/main.js'],
+  entry: './src/main.js',
   module: {
     rules: [
       { test: /\.vue$/, use: ['vue-loader'] },
@@ -42,6 +42,4 @@ module.exports = {
     new ManifestPlugin({ seed: manifest }),
     new WorkboxPlugin.GenerateSW(),
   ],
-  // To use Joi cliend side: https://tisha.me/joi-issue
-  node: { net: 'empty' },
 };
