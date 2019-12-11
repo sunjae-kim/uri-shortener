@@ -37,6 +37,13 @@ module.exports = {
     new VueLoaderPlugin(),
     new Dotenv(),
     new WorkboxPlugin.GenerateSW(),
-    new CopyPlugin([{ context: path.join(__dirname, 'public'), from: '**.*' }]),
+    new CopyPlugin([
+      { context: path.join(__dirname, 'public'), from: '**.*' },
+      {
+        context: path.join(__dirname, 'public', 'favicon'),
+        to: 'favicon',
+        from: '**.*',
+      },
+    ]),
   ],
 };
