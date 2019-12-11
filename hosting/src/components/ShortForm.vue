@@ -7,7 +7,7 @@
       <div class="ui labeled action input">
         <div class="ui label">tisha.me/</div>
         <input v-model="data.short" type="text" placeholder="키워드를 입력하세요" />
-        <button class="ui blue button">Short!</button>
+        <button class="ui blue button">Shorten!</button>
       </div>
     </sui-form-field>
   </sui-form>

@@ -15,7 +15,7 @@ import { mapState, mapActions, mapGetters } from 'vuex';
 export default {
   name: 'Header',
   data: () => ({
-    logoImage: require('@/assets/logo.png').default
+    logoImage: require('public/logo.png').default
   }),
   computed: {
     ...mapGetters(['isLoggedIn'])
