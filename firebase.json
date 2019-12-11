@@ -18,7 +18,7 @@
         "function": "shortener"
       },
       {
-        "source": "!/(robots|favicon).*",
+        "source": "!/(robots|favicon|opg).*",
         "function": "shortener"
       }
     ]
