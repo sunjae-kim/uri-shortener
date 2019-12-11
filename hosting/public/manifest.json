@@ -3,7 +3,7 @@
   "name": "Tisha.me",
   "icons": [
     {
-      "src": "logo.png",
+      "src": "../src/assets/logo.png",
       "purpose": "any",
       "sizes": "160x160"
     }

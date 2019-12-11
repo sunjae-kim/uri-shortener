@@ -16,6 +16,10 @@
       {
         "source": "/**",
         "function": "shortener"
+      },
+      {
+        "source": "!/(robots|favicon).*",
+        "function": "shortener"
       }
     ]
   }
