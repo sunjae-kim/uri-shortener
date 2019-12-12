@@ -1,6 +1,6 @@
 <template>
-  <sui-dimmer v-if="user.loading" active inverted>
-    <sui-loader content="Loading..." />
+  <sui-dimmer v-if="loading" active inverted>
+    <sui-loader content="사용자 정보를 가져오는 중입니다.." />
   </sui-dimmer>
   <sui-container v-else id="app">
     <router-view />
@@ -8,32 +8,38 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex';
-import router from '@/router';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'App',
   computed: {
-    ...mapState(['user'])
+    ...mapState('user', ['loading']),
   },
   methods: {
-    ...mapActions(['onAuthStateChanged'])
+    ...mapActions('user', ['onAuthStateChanged']),
   },
   mounted() {
     this.onAuthStateChanged();
-  }
+  },
 };
 </script>
 
 <style>
-.text_wrap {
+/* Global */
+.text-wrap {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
-
-.m0 {
+.m-0 {
   margin: 0 !important;
+}
+.centered-screen {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
 }
 
 /* Semantic UI Overriding */

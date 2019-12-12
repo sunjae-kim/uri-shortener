@@ -1,10 +1,10 @@
 <template>
-  <section id="shorts">
-    <sui-dimmer v-if="shorts.loading" active inverted>
-      <sui-loader content="Loading..." />
+  <section id="short-list">
+    <sui-dimmer v-if="loading" active inverted>
+      <sui-loader content="데이터를 가져오는 중입니다.." />
     </sui-dimmer>
     <sui-list v-else divided relaxed>
-      <sui-list-item v-for="short in orderedShorts" :key="short.id">
+      <sui-list-item v-for="short in orderedShortList" :key="short.id">
         <ShortListItem :short="short" />
       </sui-list-item>
     </sui-list>
@@ -18,17 +18,17 @@ import ShortListItem from '@/components/ShortListItem.vue';
 export default {
   name: 'ShortList',
   components: {
-    ShortListItem
+    ShortListItem,
   },
   computed: {
-    ...mapState(['shorts']),
-    ...mapGetters(['orderedShorts'])
-  }
+    ...mapState('shortList', ['loading']),
+    ...mapGetters('shortList', ['orderedShortList']),
+  },
 };
 </script>
 
 <style>
-section#shorts {
+section#short-list {
   margin: 3rem 0;
 }
 </style>

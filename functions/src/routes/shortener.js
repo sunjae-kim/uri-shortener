@@ -1,40 +1,35 @@
 const { http, https } = require('follow-redirects');
-const { shortsRef } = require('../database');
-const { validateData } = require('../service');
+const { shortListRef } = require('../database');
+const { validateShort } = require('../service');
 const wrapper = require('../common/wrapper');
 
-const redirect = (req, res) => {
-  const domain = process.env.DOMAIN;
-  const { path } = req.params;
-  shortsRef.child(path).once(
-    'value',
-    snapshot => {
-      const data = snapshot.val();
-      if (data) return res.redirect(301, data.originalUrl);
-      return res.redirect(`${domain}/invalid?short=${path}`);
-    },
-    () => res.redirect(`${domain}/invalid`),
-  );
-};
+const redirect = wrapper(async (req, res) => {
+  const domain = process.env.CLIENT_DOMAIN;
+  const { keyword } = req.params;
+  const snapshot = await shortListRef.child(keyword).once('value');
+  const data = snapshot.val();
+  if (data) return res.redirect(301, data.originalUri);
+  return res.redirect(`${domain}/invalid?keyword=${keyword}`);
+});
 
 const validateUri = wrapper(async (req, res) => {
-  const { value, error } = validateData(req.query);
+  const { value, error } = validateShort(req.query);
   if (error) return res.status(400).send({ message: error.details[0].message });
-  const { short, originalUrl } = value;
 
-  const snapshot = await shortsRef.child(short).once('value');
+  const { keyword, originalUri } = value;
+  const snapshot = await shortListRef.child(keyword).once('value');
   if (snapshot.exists())
     return res.status(400).send({ message: '이미 등록된 키워드입니다' });
 
   const httpsRegex = /^https:\/\//;
-  const isHttps = httpsRegex.test(originalUrl);
+  const isHttps = httpsRegex.test(originalUri);
   const get = isHttps ? https.get : http.get;
-  return get(originalUrl, response => {
+  return get(originalUri, response =>
     res.status(200).send({
-      originalUrl: response.responseUrl,
-      short,
-    });
-  });
+      originalUri: response.responseUrl,
+      keyword,
+    }),
+  );
 });
 
 module.exports = {

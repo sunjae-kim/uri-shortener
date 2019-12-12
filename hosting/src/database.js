@@ -11,7 +11,7 @@ const firebaseConfig = {
 
 const db = firebase.initializeApp(firebaseConfig).database();
 
-export const shortsRef = db.ref('/shorts');
+export const shortListRef = db.ref('/shortList');
 export const {
   database: {
     ServerValue: { TIMESTAMP },

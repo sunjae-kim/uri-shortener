@@ -1,13 +1,14 @@
 import firebase from '@/database';
-import router from '@/router';
+
+const getInitialData = () => ({
+  uid: '',
+  email: '',
+  displayName: '',
+});
 
 const state = {
   loading: true,
-  data: {
-    uid: '',
-    email: '',
-    displayName: '',
-  },
+  data: getInitialData(),
 };
 
 const getters = {
@@ -21,7 +22,7 @@ const mutations = {
     state.data = userData;
   },
   clearUser(state) {
-    state.data = { uid: '', email: '', displayName: '' };
+    state.data = getInitialData();
   },
   setUserLoading(state, loading) {
     state.loading = loading;
@@ -35,8 +36,7 @@ const actions = {
     commit('clearUser');
     commit('setUserLoading', false);
   },
-  signInWithGoogle({ commit }) {
-    commit('setUserLoading', true);
+  signInWithGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithRedirect(provider);
   },
@@ -57,4 +57,5 @@ export default {
   getters,
   mutations,
   actions,
+  namespaced: true,
 };

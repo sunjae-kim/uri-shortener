@@ -1,14 +1,14 @@
 const Joi = require('joi');
 
-const validateData = data => {
+const validateShort = short => {
   const schema = {
-    originalUrl: Joi.string()
+    originalUri: Joi.string()
       .uri()
       .required()
       .error(() => ({
         message: '올바른 URI 형식이 아닙니다',
       })),
-    short: Joi.string()
+    keyword: Joi.string()
       .required()
       .trim()
       .regex(/^[^.[\]#$ ]+$/)
@@ -16,9 +16,9 @@ const validateData = data => {
         message: '키워드에 . [ ] # $ 및 공백 문자는 사용하실 수 없습니다',
       })),
   };
-  return Joi.validate(data, schema);
+  return Joi.validate(short, schema);
 };
 
 module.exports = {
-  validateData,
+  validateShort,
 };

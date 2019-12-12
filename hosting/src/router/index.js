@@ -10,7 +10,7 @@ const routes = [
     path: '/invalid',
     name: 'invalid',
     component: Invalid,
-    props: route => ({ short: route.query.short }),
+    props: route => ({ keyword: route.query.keyword }),
   },
 ];
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header />
-    <ShortForm />
+    <ShortenForm />
     <ShortList />
   </div>
 </template>
@@ -10,28 +10,30 @@
 import { mapActions, mapGetters } from 'vuex';
 import ClipboardJS from 'clipboard';
 import router from '@/router';
-import ShortForm from '@/components/ShortForm.vue';
+import ShortenForm from '@/components/ShortenForm.vue';
 import ShortList from '@/components/ShortList.vue';
 import Header from '@/components/Header.vue';
 
 export default {
   name: 'Home',
   components: {
-    ShortForm,
+    ShortenForm,
     ShortList,
-    Header
+    Header,
   },
   computed: {
-    ...mapGetters(['isLoggedIn'])
+    ...mapGetters('user', ['isLoggedIn']),
   },
   methods: {
-    ...mapActions(['bindShorts']),
+    ...mapActions('shortList', ['bindShortList']),
+  },
+  created() {
+    if (!this.isLoggedIn) return router.push('/login');
   },
   mounted() {
-    if (!this.isLoggedIn) router.push('/login');
+    this.bindShortList();
     new ClipboardJS('.copy_btn');
-    this.bindShorts();
-  }
+  },
 };
 </script>
 

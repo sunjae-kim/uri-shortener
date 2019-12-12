@@ -8,8 +8,8 @@ admin.initializeApp({
 });
 
 const db = admin.database();
-const shortsRef = db.ref('/shorts');
+const shortListRef = db.ref('/shortList');
 
 module.exports = {
-  shortsRef,
+  shortListRef,
 };

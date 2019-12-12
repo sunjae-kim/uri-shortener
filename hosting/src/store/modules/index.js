@@ -1,7 +1,7 @@
-import shorts from './shorts';
+import shortList from './shortList';
 import user from './user';
 
 export default {
-  shorts,
+  shortList,
   user,
-}
+};
