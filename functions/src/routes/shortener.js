@@ -1,6 +1,6 @@
 const { http, https } = require('follow-redirects');
 const { shortListRef } = require('../database');
-const { validateShort } = require('../service');
+const { validateShortData } = require('../utils/validators');
 const wrapper = require('../common/wrapper');
 
 const redirect = wrapper(async (req, res) => {
@@ -12,8 +12,8 @@ const redirect = wrapper(async (req, res) => {
   return res.redirect(`${domain}/invalid?keyword=${keyword}`);
 });
 
-const validateUri = wrapper(async (req, res) => {
-  const { value, error } = validateShort(req.query);
+const validateShort = wrapper(async (req, res) => {
+  const { value, error } = validateShortData(req.query);
   if (error) return res.status(400).send({ message: error.details[0].message });
 
   const { keyword, originalUri } = value;
@@ -34,5 +34,5 @@ const validateUri = wrapper(async (req, res) => {
 
 module.exports = {
   redirect,
-  validateUri,
+  validateShort,
 };

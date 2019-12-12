@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const validateShort = short => {
+const validateShortData = short => {
   const schema = {
     originalUri: Joi.string()
       .uri()
@@ -20,5 +20,5 @@ const validateShort = short => {
 };
 
 module.exports = {
-  validateShort,
+  validateShortData,
 };
