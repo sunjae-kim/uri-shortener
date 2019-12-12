@@ -1,4 +1,5 @@
 import firebase from '@/database';
+import router from '@/router';
 
 const state = {
   loading: true,
@@ -10,36 +11,36 @@ const state = {
 };
 
 const getters = {
-  isLoggedIn: function(state) {
+  isLoggedIn(state) {
     return state.data.uid ? true : false;
   },
 };
 
 const mutations = {
-  setUser: function(state, userData) {
+  setUser(state, userData) {
     state.data = userData;
   },
-  clearUser: function(state) {
+  clearUser(state) {
     state.data = { uid: '', email: '', displayName: '' };
   },
-  setUserLoading: function(state, loading) {
+  setUserLoading(state, loading) {
     state.loading = loading;
   },
 };
 
 const actions = {
-  signOut: async function({ commit }) {
+  async signOut({ commit }) {
     commit('setUserLoading', true);
     await firebase.auth().signOut();
     commit('clearUser');
     commit('setUserLoading', false);
   },
-  signInWithGoogle: function({ commit }) {
+  signInWithGoogle({ commit }) {
     commit('setUserLoading', true);
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithRedirect(provider);
   },
-  onAuthStateChanged: function({ commit }) {
+  onAuthStateChanged({ commit }) {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         const { uid, email, displayName } = user;

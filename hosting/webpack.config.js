@@ -32,6 +32,9 @@ module.exports = {
     },
     extensions: ['*', '.js', '.vue', '.json'],
   },
+  devServer: {
+    historyApiFallback: true,
+  },
   plugins: [
     new HtmlWebPackPlugin({ template: './public/index.html' }),
     new VueLoaderPlugin(),
@@ -41,7 +44,6 @@ module.exports = {
       { context: path.join(__dirname, 'public'), from: '**.*' },
       {
         context: path.join(__dirname, 'public', 'favicon'),
-        to: 'favicon',
         from: '**.*',
       },
     ]),

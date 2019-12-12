@@ -3,48 +3,24 @@
     <sui-loader content="Loading..." />
   </sui-dimmer>
   <sui-container v-else id="app">
-    <div v-if="isLoggedIn">
-      <Header />
-      <ShortForm />
-      <ShortList />
-    </div>
-    <div v-else id="login">
-      <Header />
-      <sui-button
-        social="google"
-        content="Sign in with Google"
-        icon="google"
-        @click="signInWithGoogle"
-      />
-    </div>
+    <router-view />
   </sui-container>
 </template>
 
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex';
-import ClipboardJS from 'clipboard';
-import ShortForm from '@/components/ShortForm.vue';
-import ShortList from '@/components/ShortList.vue';
-import Header from '@/components/Header.vue';
+import router from '@/router';
 
 export default {
   name: 'App',
   computed: {
-    ...mapState(['user']),
-    ...mapGetters(['isLoggedIn'])
+    ...mapState(['user'])
   },
   methods: {
-    ...mapActions(['bindShorts', 'signInWithGoogle', 'onAuthStateChanged'])
+    ...mapActions(['onAuthStateChanged'])
   },
   mounted() {
-    this.bindShorts();
-    new ClipboardJS('.copy_btn');
     this.onAuthStateChanged();
-  },
-  components: {
-    ShortForm,
-    ShortList,
-    Header
   }
 };
 </script>
@@ -58,14 +34,6 @@ export default {
 
 .m0 {
   margin: 0 !important;
-}
-
-#login {
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
-  align-items: center;
-  height: 60vh;
 }
 
 /* Semantic UI Overriding */

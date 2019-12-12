@@ -14,11 +14,11 @@
     ],
     "rewrites": [
       {
-        "source": "/**",
-        "function": "shortener"
+        "source": "/@(login|invalid)",
+        "destination": "/index.html"
       },
       {
-        "source": "!/(robots|favicon|opg).*",
+        "source": "/**",
         "function": "shortener"
       }
     ]

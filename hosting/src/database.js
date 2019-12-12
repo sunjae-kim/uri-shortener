@@ -11,20 +11,6 @@ const firebaseConfig = {
 
 const db = firebase.initializeApp(firebaseConfig).database();
 
-export const getShort = path => {
-  return new Promise((resolve, reject) => {
-    shortsRef.child(path).once(
-      'value',
-      snapshot => {
-        resolve(snapshot.val());
-      },
-      error => {
-        reject(error);
-      },
-    );
-  });
-};
-
 export const shortsRef = db.ref('/shorts');
 export const {
   database: {

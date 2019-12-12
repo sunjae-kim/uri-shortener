@@ -37,10 +37,8 @@ const actions = {
 
       if (!originalUrl) throw Error('줄이고자 하는 URI 를 입력해주세요');
       if (!short) throw Error('등록할 키워드를 입력해주세요');
-      if (await getShort(short))
-        throw Error('이미 등록된 키워드입니다');
 
-      const SERVER_URL = process.env.FIREBASE_FUNCTIONS_URL;
+      const SERVER_URL = process.env.DOMAIN;
       const response = await axios.get(
         `${SERVER_URL}/validate-url?originalUrl=${originalUrl}&short=${short}`,
       );

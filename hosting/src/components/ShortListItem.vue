@@ -36,7 +36,7 @@
 import moment from 'moment';
 import Swal from 'sweetalert2';
 import { mapActions } from 'vuex';
-import { shortsRef, getShort } from '@/database';
+import { shortsRef } from '@/database';
 
 export default {
   name: 'ShortListItem',
