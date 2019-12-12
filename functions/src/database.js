@@ -10,19 +10,6 @@ admin.initializeApp({
 const db = admin.database();
 const shortsRef = db.ref('/shorts');
 
-const getShort = (res, path, callback) => {
-  return shortsRef.child(path).once(
-    'value',
-    snapshot => {
-      callback(snapshot.val());
-    },
-    error => {
-      return res.status(500).send({ message: error });
-    },
-  );
-};
-
 module.exports = {
   shortsRef,
-  getShort,
 };
