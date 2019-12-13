@@ -3,7 +3,7 @@
     <section class="centered-screen">
       <h1 is="sui-header">
         요청하신 페이지를 찾을 수 없습니다.
-        <sui-header-subheader v-if="keyword">{{ formatKeywordInKorean(keyword) }} 등록되지 않은 경로입니다.</sui-header-subheader>
+        <sui-header-subheader v-if="keyword">{{ keyword | formatKeywordInKorean }} 등록되지 않은 경로입니다.</sui-header-subheader>
       </h1>
       <router-link to="/">지금 경로 등록하러 가기</router-link>
     </section>
@@ -18,7 +18,7 @@ export default {
   props: {
     keyword: String,
   },
-  methods: {
+  filters: {
     formatKeywordInKorean,
   },
 };

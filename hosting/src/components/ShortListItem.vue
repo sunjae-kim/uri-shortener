@@ -7,7 +7,7 @@
           <h3 is="sui-header">
             <span>
               {{ short.keyword }}
-              <span class="created-at">{{ formatDate(short.createdAt) }}</span>
+              <span class="created-at">{{ short.createdAt | formatDate }}</span>
             </span>
             <sui-header-subheader class="text-wrap">
               <a target="_blank" :href="short.originalUri">
@@ -55,6 +55,8 @@ export default {
         timer: 1250,
       });
     },
+  },
+  filters: {
     formatDate: timestamp => moment(timestamp).fromNow(),
   },
 };
