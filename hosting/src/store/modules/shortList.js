@@ -34,14 +34,15 @@ const actions = {
   async createShort({ commit, getters }, { originalUri, keyword }) {
     try {
       commit('setShortsLoading', true);
-
+      
       if (!originalUri) throw Error('줄이고자 하는 URI 를 입력해주세요');
       if (!keyword) throw Error('등록할 키워드를 입력해주세요');
 
       const SERVER_IP = process.env.SERVER_IP;
-      const response = await axios.get(
-        `${SERVER_IP}/validate-short?originalUri=${originalUri}&keyword=${keyword}`,
-      );
+      const response = await axios.post(`${SERVER_IP}/validate-short`, {
+        originalUri: encodeURI(originalUri),
+        keyword,
+      });
       const data = {
         ...response.data,
         ...getters.metaData,

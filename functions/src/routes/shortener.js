@@ -17,7 +17,7 @@ const redirect = wrapper(async (req, res) => {
 });
 
 const validateShort = wrapper(async (req, res) => {
-  const { value, error } = validateShortData(req.query);
+  const { value, error } = validateShortData(req.body);
   if (error) return res.status(400).send({ message: error.details[0].message });
 
   const { keyword, originalUri } = value;
