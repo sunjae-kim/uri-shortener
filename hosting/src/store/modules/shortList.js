@@ -4,7 +4,10 @@ import { firebaseAction } from 'vuexfire';
 import { shortListRef, TIMESTAMP } from '@/database';
 
 const state = {
-  loading: true,
+  loading: {
+    status: true,
+    message: '데이터를 가져오는 중입니다..',
+  },
   data: {},
 };
 
@@ -21,20 +24,23 @@ const getters = {
 };
 
 const mutations = {
-  setShortsLoading(state, loading) {
-    state.loading = loading;
+  setShortsLoading(state, payload) {
+    state.loading = payload;
   },
 };
 
 const actions = {
   bindShortList: firebaseAction(async ({ commit, bindFirebaseRef }) => {
     await bindFirebaseRef('data', shortListRef);
-    commit('setShortsLoading', false);
+    commit('setShortsLoading', { status: false, message: '' });
   }),
   async createShort({ commit, getters }, { originalUri, keyword }) {
     try {
-      commit('setShortsLoading', true);
-      
+      commit('setShortsLoading', {
+        status: true,
+        message: '데이터를 생성하는 중입니다..',
+      });
+
       if (!originalUri) throw Error('줄이고자 하는 URI 를 입력해주세요');
       if (!keyword) throw Error('등록할 키워드를 입력해주세요');
 
@@ -49,7 +55,7 @@ const actions = {
       };
 
       await shortListRef.child(keyword).set(data);
-      commit('setShortsLoading', false);
+      commit('setShortsLoading', { status: false, message: '' });
       await Swal.fire(
         'tishe.me/' + keyword,
         '성공적으로 생성되었습니다',
@@ -57,7 +63,7 @@ const actions = {
       );
       return true;
     } catch (error) {
-      commit('setShortsLoading', false);
+      commit('setShortsLoading', { status: false, message: '' });
       await Swal.fire(
         '오류',
         error.response ? error.response.data.message : error.message,
@@ -78,9 +84,12 @@ const actions = {
       cancelButtonText: '아니요',
     });
     if (result.value) {
-      commit('setShortsLoading', true);
+      commit('setShortsLoading', {
+        status: true,
+        message: '데이터를 삭제하는 중입니다..',
+      });
       await shortListRef.child(path).remove();
-      commit('setShortsLoading', false);
+      commit('setShortsLoading', { status: false, message: '' });
       await Swal.fire('삭제 완료', '성공적으로 삭제되었습니다', 'success');
     }
   },

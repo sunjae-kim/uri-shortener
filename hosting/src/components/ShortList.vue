@@ -1,10 +1,10 @@
 <template>
   <section id="short-list">
-    <sui-dimmer v-if="loading" active inverted>
-      <sui-loader content="데이터를 가져오는 중입니다.." />
+    <sui-dimmer v-if="loading.status" active inverted>
+      <sui-loader :content="loading.message" />
     </sui-dimmer>
     <sui-list v-else divided relaxed>
-      <sui-list-item v-for="short in orderedShortList" :key="short.id">
+      <sui-list-item v-for="short in orderedShortList" :key="short.keyword">
         <ShortListItem :short="short" />
       </sui-list-item>
     </sui-list>
