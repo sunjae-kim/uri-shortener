@@ -7,6 +7,7 @@
       <sui-list-item v-for="short in orderedShortList" :key="short.keyword">
         <ShortListItem :short="short" />
       </sui-list-item>
+      <p v-if="orderedShortList.length === 0">위 폼을 통해 첫번째 URI를 만들어 보세요!</p>
     </sui-list>
   </section>
 </template>

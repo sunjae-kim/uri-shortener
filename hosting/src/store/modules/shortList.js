@@ -49,6 +49,12 @@ const actions = {
         originalUri: encodeURI(originalUri),
         keyword,
       });
+
+      const snapshot = await shortListRef.child(keyword).once('value');
+      if (snapshot.exists()) {
+        throw Error('이미 등록된 키워드입니다');
+      }
+
       const data = {
         ...response.data,
         ...getters.metaData,
@@ -91,6 +97,54 @@ const actions = {
       await shortListRef.child(path).remove();
       commit('setShortsLoading', { status: false, message: '' });
       await Swal.fire('삭제 완료', '성공적으로 삭제되었습니다', 'success');
+    }
+  },
+  async updateShort({ commit }, [short, [keyword, originalUri]]) {
+    if (short.keyword === keyword && short.originalUri === originalUri) {
+      return Swal.fire('수정 완료', '변경사항이 없습니다', 'success');
+    }
+
+    try {
+      commit('setShortsLoading', {
+        status: true,
+        message: '데이터를 수정하는 중입니다..',
+      });
+
+      if (!originalUri) throw Error('줄이고자 하는 URI 를 입력해주세요');
+      if (!keyword) throw Error('등록할 키워드를 입력해주세요');
+
+      const SERVER_IP = process.env.SERVER_IP;
+      const response = await axios.post(`${SERVER_IP}/validate-short`, {
+        originalUri: encodeURI(originalUri),
+        keyword,
+      });
+
+      const snapshot = await shortListRef.child(keyword).once('value');
+      if (keyword !== short.keyword && snapshot.exists()) {
+        throw Error('이미 등록된 키워드입니다');
+      }
+
+      const data = {
+        ...short,
+        ...response.data,
+      };
+
+      await shortListRef.child(short.keyword).remove();
+      await shortListRef.child(keyword).set(data);
+      commit('setShortsLoading', { status: false, message: '' });
+
+      await Swal.fire(
+        'tishe.me/' + keyword,
+        '성공적으로 수정되었습니다',
+        'success',
+      );
+    } catch (error) {
+      commit('setShortsLoading', { status: false, message: '' });
+      await Swal.fire(
+        '오류',
+        error.response ? error.response.data.message : error.message,
+        'error',
+      );
     }
   },
 };

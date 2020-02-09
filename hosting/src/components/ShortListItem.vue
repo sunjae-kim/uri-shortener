@@ -19,7 +19,12 @@
         </sui-grid-column>
         <!-- Buttons -->
         <sui-grid-column>
-          <sui-button floated="right" color="red" icon="trash" @click="deleteShort(short.keyword)"></sui-button>
+          <sui-button
+            floated="right"
+            color="red"
+            icon="trash"
+            @click="deleteShort(short.keyword)"
+          ></sui-button>
           <sui-button
             floated="right"
             color="teal"
@@ -27,6 +32,12 @@
             class="copy_btn"
             :data-clipboard-text="'https://tisha.me/' + short.keyword"
             @click="onCopyBtnClick(short.keyword)"
+          ></sui-button>
+          <sui-button
+            floated="right"
+            color="teal"
+            icon="edit"
+            @click="onEditBtnClick(short)"
           ></sui-button>
         </sui-grid-column>
       </sui-grid-row>
@@ -45,7 +56,7 @@ export default {
     short: Object,
   },
   methods: {
-    ...mapActions('shortList', ['deleteShort']),
+    ...mapActions('shortList', ['deleteShort', 'updateShort']),
     onCopyBtnClick(keyword) {
       Swal.fire({
         icon: 'success',
@@ -54,6 +65,25 @@ export default {
         showConfirmButton: false,
         timer: 1250,
       });
+    },
+    async onEditBtnClick(short) {
+      const { value } = await Swal.fire({
+        icon: 'info',
+        title: '수정하기',
+        html: `<div class="ui labeled input">
+            <div class="ui label">tisha.me/</div>
+            <input id="updating-keyword" value="${short.keyword}"/>
+          </div>
+          <input id="updating-uri" class="swal2-input" value="${short.originalUri}"/>`,
+        focusConfirm: false,
+        preConfirm: () => {
+          return [
+            document.getElementById('updating-keyword').value,
+            document.getElementById('updating-uri').value,
+          ];
+        },
+      });
+      if (value) this.updateShort([short, value]);
     },
   },
   filters: {

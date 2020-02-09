@@ -21,10 +21,6 @@ const validateShort = wrapper(async (req, res) => {
   if (error) return res.status(400).send({ message: error.details[0].message });
 
   const { keyword, originalUri } = value;
-  const snapshot = await shortListRef.child(keyword).once('value');
-  if (snapshot.exists())
-    return res.status(400).send({ message: '이미 등록된 키워드입니다' });
-
   const httpsRegex = /^https:\/\//;
   const isHttps = httpsRegex.test(originalUri);
   const get = isHttps ? https.get : http.get;
