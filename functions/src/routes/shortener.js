@@ -5,7 +5,8 @@ const wrapper = require('../common/wrapper');
 
 const redirect = wrapper(async (req, res) => {
   const { value, error } = validateShortData(req.params);
-  if (error) return res.redirect(`${domain}/invalid?keyword=${req.params}`);
+  if (error)
+    return res.redirect(`${domain}/invalid?keyword=${req.params.keyword}`);
 
   const { keyword } = value;
   const snapshot = await shortListRef.child(keyword).once('value');
