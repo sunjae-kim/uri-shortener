@@ -68,14 +68,16 @@ export default {
     },
     async onEditBtnClick(short) {
       const { value } = await Swal.fire({
-        icon: 'info',
         title: '수정하기',
-        html: `<div class="ui labeled input">
+        html: `<div style="width: 100%; margin-top: 1em" class="ui labeled input">
             <div class="ui label">tisha.me/</div>
             <input id="updating-keyword" value="${short.keyword}"/>
           </div>
-          <input id="updating-uri" class="swal2-input" value="${short.originalUri}"/>`,
+          <div style="width: 100%; margin-top: 1em"  class="ui input">
+            <input id="updating-uri" value="${short.originalUri}"/>
+          </div>`,
         focusConfirm: false,
+        confirmButtonText: '확인',
         preConfirm: () => {
           return [
             document.getElementById('updating-keyword').value,
