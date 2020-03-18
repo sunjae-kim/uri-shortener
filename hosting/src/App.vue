@@ -1,10 +1,10 @@
 <template>
-  <sui-dimmer v-if="loading" active inverted>
-    <sui-loader content="사용자 정보를 가져오는 중입니다.." />
-  </sui-dimmer>
-  <sui-container v-else id="app">
+  <sui-container v-if="$route.name == 'invalid' || !loading" id="app">
     <router-view />
   </sui-container>
+  <sui-dimmer v-else active inverted>
+    <sui-loader content="사용자 정보를 가져오는 중입니다.." />
+  </sui-dimmer>
 </template>
 
 <script>
