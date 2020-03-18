@@ -5,6 +5,8 @@ const wrapper = require('../common/wrapper');
 
 const redirect = wrapper(async (req, res) => {
   const { value, error } = validateShortData(req.params);
+  const domain = process.env.CLIENT_DOMAIN;
+
   if (error)
     return res.redirect(`${domain}/invalid?keyword=${req.params.keyword}`);
 
@@ -13,7 +15,6 @@ const redirect = wrapper(async (req, res) => {
   const data = snapshot.val();
   if (data) return res.redirect(301, data.originalUri);
 
-  const domain = process.env.CLIENT_DOMAIN;
   return res.redirect(`${domain}/invalid?keyword=${keyword}`);
 });
 
