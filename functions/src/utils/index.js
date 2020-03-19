@@ -17,6 +17,13 @@ const validateShortData = short => {
   return Joi.validate(short, schema);
 };
 
+const getToday = () => {
+  const day = 86400 * 1000;
+  const now = new Date().getTime();
+  return Math.floor(now / day) * day;
+};
+
 module.exports = {
   validateShortData,
+  getToday,
 };

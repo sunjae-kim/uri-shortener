@@ -7,7 +7,8 @@
           <h3 is="sui-header">
             <span>
               {{ short.keyword }}
-              <span class="created-at">{{ short.createdAt | formatDate }}</span>
+              <span class="secondary-text">{{ short.createdAt | formatDate }}</span>
+              <span class="secondary-text">visited: {{ short.view || 0 }}</span>
             </span>
             <sui-header-subheader class="text-wrap">
               <a target="_blank" :href="short.originalUri">
@@ -95,7 +96,7 @@ export default {
 </script>
 
 <style>
-.created-at {
+.secondary-text {
   color: darkgray;
   font-size: 0.8rem;
   font-weight: 100;

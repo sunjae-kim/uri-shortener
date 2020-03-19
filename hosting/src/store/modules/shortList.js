@@ -41,7 +41,7 @@ const actions = {
         message: '데이터를 생성하는 중입니다..',
       });
 
-      if (!originalUri) throw Error('줄이고자 하는 URI 를 입력해주세요');
+      if (!originalUri) throw Error('줄이고자 하는 URI를 입력해주세요');
       if (!keyword) throw Error('등록할 키워드를 입력해주세요');
 
       const SERVER_IP = process.env.SERVER_IP;
