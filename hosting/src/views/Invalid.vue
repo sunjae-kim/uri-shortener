@@ -4,7 +4,7 @@
       <h1 is="sui-header">
         요청하신 페이지를 찾을 수 없습니다.
         <sui-header-subheader v-if="keyword"
-          >{{ keyword | formatKeywordInKorean }} 등록되지 않은
+          >{{ keyword | applyJosa }} 등록되지 않은
           경로입니다.</sui-header-subheader
         >
       </h1>
@@ -15,7 +15,7 @@
 
 <script>
 import router from '@/router';
-import { formatKeywordInKorean } from '@/utils/josa';
+import { applyJosa } from '@/utils/josa';
 
 export default {
   name: 'Invalid',
@@ -23,7 +23,7 @@ export default {
     keyword: String,
   },
   filters: {
-    formatKeywordInKorean,
+    applyJosa,
   },
   created() {
     window.history.replaceState(
