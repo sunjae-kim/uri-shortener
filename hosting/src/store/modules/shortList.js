@@ -12,11 +12,11 @@ const state = {
 };
 
 const getters = {
-  orderedShortList: ({ data }, _, { user }) =>
+  orderedShortList: ({ data }, getters, { user }) =>
     Object.values(data)
       .sort((a, b) => b.createdAt - a.createdAt)
       .filter(short => short.uid === user.data.uid),
-  metaData: (_, __, { user: { data } }) => ({
+  metaData: (state, getters, { user: { data } }) => ({
     author: data.displayName,
     uid: data.uid,
     createdAt: TIMESTAMP,

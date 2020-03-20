@@ -14,8 +14,7 @@
 </template>
 
 <script>
-import router from '@/router';
-import { applyJosa } from '@/utils/josa';
+import { applyJosa, replaceURI } from '@/utils';
 
 export default {
   name: 'Invalid',
@@ -26,11 +25,7 @@ export default {
     applyJosa,
   },
   created() {
-    window.history.replaceState(
-      {},
-      document.title,
-      '/' + (this.keyword || '404'),
-    );
+    replaceURI(this.keyword);
   },
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <sui-container v-if="$route.name == 'invalid' || !loading" id="app">
+  <sui-container v-if="!loading" id="app">
     <router-view />
   </sui-container>
   <sui-dimmer v-else active inverted>
@@ -18,7 +18,10 @@ export default {
   methods: {
     ...mapActions('user', ['onAuthStateChanged']),
   },
-  mounted() {
+  created() {
+    const { current, pending } = this.$router.history;
+    if (pending && pending.name === 'invalid') return;
+    if (current && current.name === 'invalid') return;
     this.onAuthStateChanged();
   },
 };

@@ -1,4 +1,5 @@
 import VueRouter from 'vue-router';
+import store from '@/store';
 const Home = () => import('@/views/Home.vue');
 const Login = () => import('@/views/Login.vue');
 const Invalid = () => import('@/views/Invalid.vue');
@@ -19,6 +20,10 @@ const routes = [
     name: 'invalid',
     component: Invalid,
     props: route => ({ keyword: route.query.keyword }),
+    beforeEnter: (to, from, next) => {
+      store.commit('user/setUserLoading', false);
+      next();
+    },
   },
 ];
 

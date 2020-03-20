@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="isLoggedIn">
     <Header />
     <ShortenForm />
     <ShortList />
@@ -7,9 +7,8 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 import ClipboardJS from 'clipboard';
-import router from '@/router';
 import ShortenForm from '@/components/ShortenForm.vue';
 import ShortList from '@/components/ShortList.vue';
 import Header from '@/components/Header.vue';
@@ -24,18 +23,10 @@ export default {
   computed: {
     ...mapGetters('user', ['isLoggedIn']),
   },
-  methods: {
-    ...mapActions('shortList', ['bindShortList']),
-  },
-  created() {
-    if (!this.isLoggedIn) return router.push('/login');
-  },
   mounted() {
-    this.bindShortList();
     new ClipboardJS('.copy_btn');
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

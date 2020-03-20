@@ -1,5 +1,5 @@
 <template>
-  <sui-container id="login">
+  <sui-container v-if="!isLoggedIn" id="login">
     <section class="centered-screen">
       <Header />
       <sui-button
@@ -15,7 +15,6 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import Header from '@/components/Header.vue';
-import router from '@/router';
 
 export default {
   name: 'Login',
@@ -28,11 +27,7 @@ export default {
   methods: {
     ...mapActions('user', ['signInWithGoogle']),
   },
-  created() {
-    if (this.isLoggedIn) return router.push('/');
-  },
 };
 </script>
 
-<style>
-</style>
+<style></style>

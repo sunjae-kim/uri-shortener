@@ -12,3 +12,7 @@ export const applyJosa = keyword => {
   if (code - 44032 < 0 || code - 44032 > 11171) return `"${keyword}" 은(는)`;
   return `"${keyword}" ${josa.c(keyword, '은/는')}`;
 };
+
+export const replaceURI = path => {
+  window.history.replaceState({}, document.title, '/' + (path || '404'));
+};

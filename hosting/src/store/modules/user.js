@@ -1,4 +1,5 @@
 import firebase from '@/database';
+import router from '@/router';
 
 const getInitialData = () => ({
   uid: '',
@@ -32,15 +33,22 @@ const mutations = {
 const actions = {
   async signOut({ commit }) {
     commit('setUserLoading', true);
-    await firebase.auth().signOut();
     commit('clearUser');
-    commit('setUserLoading', false);
+    firebase.auth().signOut();
   },
   signInWithGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithRedirect(provider);
   },
-  onAuthStateChanged({ commit }) {
+  redirect({ getters, dispatch }) {
+    const { path } = router.currentRoute;
+    if (getters.isLoggedIn) {
+      dispatch('shortList/bindShortList', null, { root: true });
+      if (path != '/') router.push('/');
+    }
+    if (!getters.isLoggedIn && path != '/login') router.push('/login');
+  },
+  onAuthStateChanged({ commit, dispatch }) {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         const { uid, email, displayName } = user;
@@ -48,6 +56,7 @@ const actions = {
         commit('setUser', userData);
       }
       commit('setUserLoading', false);
+      dispatch('redirect');
     });
   },
 };
