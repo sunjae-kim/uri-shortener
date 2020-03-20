@@ -35,6 +35,16 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
   },
+  output: {
+    filename: '[name].[contenthash].js',
+    chunkFilename: '[id].[contenthash].js',
+    path: path.resolve(__dirname, 'dist'),
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
   plugins: [
     new HtmlWebPackPlugin({ template: './public/index.html' }),
     new VueLoaderPlugin(),
@@ -48,9 +58,4 @@ module.exports = {
       },
     ]),
   ],
-  output: {
-    filename: '[name].[contenthash].js',
-    chunkFilename: '[name].[contenthash].js',
-    path: path.resolve(__dirname, 'dist'),
-  },
 };
