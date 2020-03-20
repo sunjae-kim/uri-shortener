@@ -1,11 +1,19 @@
 import VueRouter from 'vue-router';
-import Home from '@/views/Home.vue';
-import Login from '@/views/Login.vue';
-import Invalid from '@/views/Invalid.vue';
+const Home = () => import('@/views/Home.vue');
+const Login = () => import('@/views/Login.vue');
+const Invalid = () => import('@/views/Invalid.vue');
 
 const routes = [
-  { path: '/', name: 'hoem', component: Home },
-  { path: '/login', name: 'login', component: Login },
+  {
+    path: '/',
+    name: 'home',
+    component: Home,
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login,
+  },
   {
     path: '/invalid',
     name: 'invalid',
