@@ -7,7 +7,9 @@
           <h3 is="sui-header">
             <span>
               {{ short.keyword }}
-              <span class="secondary-text">{{ short.createdAt | formatDate }}</span>
+              <span class="secondary-text">{{
+                short.createdAt | formatDate
+              }}</span>
               <span class="secondary-text">visited: {{ short.view || 0 }}</span>
             </span>
             <sui-header-subheader class="text-wrap">
@@ -19,27 +21,25 @@
           </h3>
         </sui-grid-column>
         <!-- Buttons -->
-        <sui-grid-column>
-          <sui-button
-            floated="right"
-            color="red"
-            icon="trash"
-            @click="deleteShort(short.keyword)"
-          ></sui-button>
-          <sui-button
-            floated="right"
-            color="teal"
-            icon="clipboard"
-            class="copy_btn"
-            :data-clipboard-text="'https://tisha.me/' + short.keyword"
-            @click="onCopyBtnClick(short.keyword)"
-          ></sui-button>
-          <sui-button
-            floated="right"
-            color="teal"
-            icon="edit"
-            @click="onEditBtnClick(short)"
-          ></sui-button>
+        <sui-grid-column text-align="right">
+          <sui-button-group icons>
+            <button
+              class="big ui basic button copy_btn"
+              :data-clipboard-text="'https://tisha.me/' + short.keyword"
+              @click="onCopyBtnClick(short.keyword)"
+            >
+              <i class="clipboard icon" style="color: teal;"></i>
+            </button>
+            <button class="big ui basic button" @click="onEditBtnClick(short)">
+              <i class="edit icon" style="color: teal;"></i>
+            </button>
+            <button
+              class="big ui basic button"
+              @click="deleteShort(short.keyword)"
+            >
+              <i class="trash icon" style="color: firebrick;"></i>
+            </button>
+          </sui-button-group>
         </sui-grid-column>
       </sui-grid-row>
     </sui-grid>

@@ -16,3 +16,8 @@ export const applyJosa = keyword => {
 export const replaceURI = path => {
   window.history.replaceState({}, document.title, '/' + (path || '404'));
 };
+
+export const randomStr = () =>
+  Math.random()
+    .toString(36)
+    .substring(2, 7);
