@@ -59,12 +59,13 @@ export default {
 #input--label {
   line-height: 2.86;
   margin-left: 1em;
-  font-weight: 600;
+  font-weight: normal;
   font-size: 1em;
   opacity: 0.9;
 }
 
 #input--label + input {
-  padding-left: 5.3em !important;
+  padding-left: 5.2em !important;
+  font-weight: normal;
 }
 </style>
