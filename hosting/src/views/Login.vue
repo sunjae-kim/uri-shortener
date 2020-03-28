@@ -2,12 +2,14 @@
   <sui-container v-if="!isLoggedIn" id="login">
     <section class="centered-screen">
       <Header />
-      <sui-button
-        social="google"
-        content="Sign in with Google"
-        icon="google"
+      <button
+        id="google-login-btn"
+        class="ui basic button"
         @click="signInWithGoogle"
-      />
+      >
+        <img :src="googleImage" />
+        Sign in with Google
+      </button>
     </section>
   </sui-container>
 </template>
@@ -18,6 +20,9 @@ import Header from '@/components/Header.vue';
 
 export default {
   name: 'Login',
+  data: () => ({
+    googleImage: require('public/google.png').default,
+  }),
   components: {
     Header,
   },
@@ -30,4 +35,13 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+#google-login-btn {
+  display: flex;
+  align-items: center;
+}
+#google-login-btn > img {
+  height: 20px;
+  margin-right: 7px;
+}
+</style>
