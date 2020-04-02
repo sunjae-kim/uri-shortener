@@ -5,7 +5,7 @@
         <!-- Content -->
         <sui-grid-column>
           <h3 is="sui-header">
-            <span>
+            <span class="item--header">
               {{ short.keyword }}
               <span class="secondary-text">{{
                 short.createdAt | formatDate
@@ -101,6 +101,11 @@ export default {
   font-size: 0.8rem;
   font-weight: 100;
   margin-left: 0.3rem;
+}
+
+.item--header {
+  display: inline-block;
+  margin-bottom: 0.3em;
 }
 
 /* Semantic UI Overriding */

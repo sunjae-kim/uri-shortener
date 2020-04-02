@@ -53,4 +53,11 @@ export default {
     margin-right: auto !important;
   }
 }
+
+/* SweetAlert2 Overring */
+.swal2-styled.swal2-cancel {
+  color: rgba(0, 0, 0, 0.7) !important;
+  box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.15) inset;
+  background: none !important;
+}
 </style>
