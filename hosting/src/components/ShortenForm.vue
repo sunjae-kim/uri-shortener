@@ -57,11 +57,13 @@ export default {
 }
 
 #input--label {
-  line-height: 2.86;
+  line-height: inherit;
   margin-left: 1em;
+  padding: 0.678571em 0;
+  font-family: inherit;
   font-weight: normal;
   font-size: 1em;
-  opacity: 0.9;
+  opacity: 0.7;
 }
 
 #input--label + input {
