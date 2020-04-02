@@ -23,9 +23,9 @@
         <i class="random icon"></i>
         Random generate
       </span>
-      <span class="mini ui button primary">
+      <button class="mini ui button primary">
         Shorten!
-      </span>
+      </button>
     </div>
   </sui-form>
 </template>
