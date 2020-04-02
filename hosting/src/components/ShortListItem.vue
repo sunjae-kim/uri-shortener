@@ -5,7 +5,7 @@
         <!-- Content -->
         <sui-grid-column>
           <h3 is="sui-header">
-            <span class="item--header">
+            <span class="item-header">
               {{ short.keyword }}
               <span class="secondary-text">{{
                 short.createdAt | formatDate
@@ -23,20 +23,56 @@
         <!-- Buttons -->
         <sui-grid-column text-align="right">
           <sui-button-group icons>
+            <!-- Copy Button -->
             <button
-              class="big ui basic button copy_btn"
+              class="big ui basic button copy_btn remote-btn"
               :data-clipboard-text="'https://tisha.me/' + short.keyword"
               @click="onCopy(short.keyword)"
+              @mouseenter="btns.copy = true"
+              @mouseleave="btns.copy = false"
             >
+              <transition name="fade">
+                <div
+                  v-show="btns.copy"
+                  class="ui basic pointing below label btn-label"
+                >
+                  <p>copy</p>
+                </div>
+              </transition>
               <i class="clipboard icon" style="color: teal;"></i>
             </button>
-            <button class="big ui basic button" @click="onEdit(short)">
+            <!-- Edit Button -->
+            <button
+              class="big ui basic button remote-btn"
+              @click="onEdit(short)"
+              @mouseenter="btns.edit = true"
+              @mouseleave="btns.edit = false"
+            >
+              <transition name="fade">
+                <div
+                  v-show="btns.edit"
+                  class="ui basic pointing below label btn-label"
+                >
+                  <p>edit</p>
+                </div>
+              </transition>
               <i class="edit icon" style="color: teal;"></i>
             </button>
+            <!-- Delete Button -->
             <button
-              class="big ui basic button"
+              class="big ui basic button remote-btn"
               @click="onDelete(short.keyword)"
+              @mouseenter="btns.remove = true"
+              @mouseleave="btns.remove = false"
             >
+              <transition name="fade">
+                <div
+                  v-show="btns.remove"
+                  class="ui basic pointing below label btn-label"
+                >
+                  <p>remove</p>
+                </div>
+              </transition>
               <i class="trash icon" style="color: firebrick;"></i>
             </button>
           </sui-button-group>
@@ -53,18 +89,32 @@ import { mapActions } from 'vuex';
 
 export default {
   name: 'ShortListItem',
+  data: () => ({
+    btns: {
+      copy: false,
+      edit: false,
+      remove: false,
+    },
+  }),
   props: {
     short: Object,
   },
   methods: {
     ...mapActions('shortList', ['deleteShort', 'updateShort']),
     onCopy(keyword) {
-      Swal.fire({
-        icon: 'success',
-        title: 'tishe.me/' + keyword,
-        text: '클립보드에 복사되었습니다',
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'bottom-end',
         showConfirmButton: false,
-        timer: 1250,
+        timer: 3000,
+      });
+
+      Toast.fire({
+        icon: 'success',
+        html: `<div style="padding: 1em;">
+            <h4 style="margin-bottom: 0.4em;">tishe.me/${keyword}</h4>
+            <p>클립보드에 복사되었습니다</p>
+          </div>`,
       });
     },
     async onEdit(short) {
@@ -144,14 +194,30 @@ export default {
   margin-left: 0.3rem;
 }
 
-.item--header {
+.item-header {
   display: inline-block;
   margin-bottom: 0.3em;
+}
+
+.remote-btn {
+  position: relative;
+  display: flex !important;
+  justify-content: center;
+}
+
+.btn-label {
+  position: absolute !important;
+  top: -30px;
 }
 
 /* Semantic UI Overriding */
 .ui.list .list > .item > .content,
 .ui.list > .item > .content {
   padding: 1rem 0;
+}
+
+/* SweetAlert2 Overring */
+.swal2-popup.swal2-toast {
+  padding: 0 2em;
 }
 </style>

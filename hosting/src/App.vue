@@ -45,6 +45,15 @@ export default {
   height: 60vh;
 }
 
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s !important;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0 !important;
+}
+
 /* Semantic UI Overriding */
 @media only screen and (min-width: 768px) {
   #app {
