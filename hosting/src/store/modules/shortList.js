@@ -1,4 +1,3 @@
-import Swal from 'sweetalert2';
 import axios from 'axios';
 import { firebaseAction } from 'vuexfire';
 import { shortListRef, TIMESTAMP } from '@/database';
@@ -44,16 +43,16 @@ const actions = {
       if (!originalUri) throw Error('줄이고자 하는 URI를 입력해주세요');
       if (!keyword) throw Error('등록할 키워드를 입력해주세요');
 
+      const snapshot = await shortListRef.child(keyword).once('value');
+      if (snapshot.exists()) {
+        throw Error('이미 등록된 키워드입니다');
+      }
+
       const SERVER_IP = process.env.SERVER_IP;
       const response = await axios.post(`${SERVER_IP}/validate-short`, {
         originalUri: encodeURI(originalUri),
         keyword,
       });
-
-      const snapshot = await shortListRef.child(keyword).once('value');
-      if (snapshot.exists()) {
-        throw Error('이미 등록된 키워드입니다');
-      }
 
       const data = {
         ...response.data,
@@ -62,48 +61,21 @@ const actions = {
 
       await shortListRef.child(keyword).set(data);
       commit('setShortsLoading', { status: false, message: '' });
-      await Swal.fire(
-        'tishe.me/' + keyword,
-        '성공적으로 생성되었습니다',
-        'success',
-      );
-      return true;
+      return { isSuccessful: true, payload: { keyword } };
     } catch (error) {
       commit('setShortsLoading', { status: false, message: '' });
-      await Swal.fire(
-        '오류',
-        error.response ? error.response.data.message : error.message,
-        'error',
-      );
-      return false;
+      return { isSuccessful: false, payload: { error } };
     }
   },
   async deleteShort({ commit }, path) {
-    const result = await Swal.fire({
-      title: '정말 삭제하시겠습니까?',
-      text: '삭제한 데이터는 되돌릴 수 없어요',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: '네',
-      cancelButtonText: '아니요',
+    commit('setShortsLoading', {
+      status: true,
+      message: '데이터를 삭제하는 중입니다..',
     });
-    if (result.value) {
-      commit('setShortsLoading', {
-        status: true,
-        message: '데이터를 삭제하는 중입니다..',
-      });
-      await shortListRef.child(path).remove();
-      commit('setShortsLoading', { status: false, message: '' });
-      await Swal.fire('삭제 완료', '성공적으로 삭제되었습니다', 'success');
-    }
+    await shortListRef.child(path).remove();
+    commit('setShortsLoading', { status: false, message: '' });
   },
   async updateShort({ commit }, [short, [keyword, originalUri]]) {
-    if (short.keyword === keyword && short.originalUri === originalUri) {
-      return Swal.fire('수정 완료', '변경사항이 없습니다', 'success');
-    }
-
     try {
       commit('setShortsLoading', {
         status: true,
@@ -113,16 +85,16 @@ const actions = {
       if (!originalUri) throw Error('줄이고자 하는 URI 를 입력해주세요');
       if (!keyword) throw Error('등록할 키워드를 입력해주세요');
 
+      const snapshot = await shortListRef.child(keyword).once('value');
+      if (keyword !== short.keyword && snapshot.exists()) {
+        throw Error('이미 등록된 키워드입니다');
+      }
+
       const SERVER_IP = process.env.SERVER_IP;
       const response = await axios.post(`${SERVER_IP}/validate-short`, {
         originalUri: encodeURI(originalUri),
         keyword,
       });
-
-      const snapshot = await shortListRef.child(keyword).once('value');
-      if (keyword !== short.keyword && snapshot.exists()) {
-        throw Error('이미 등록된 키워드입니다');
-      }
 
       const data = {
         ...short,
@@ -132,19 +104,10 @@ const actions = {
       await shortListRef.child(short.keyword).remove();
       await shortListRef.child(keyword).set(data);
       commit('setShortsLoading', { status: false, message: '' });
-
-      await Swal.fire(
-        'tishe.me/' + keyword,
-        '성공적으로 수정되었습니다',
-        'success',
-      );
+      return { isSuccessful: true, payload: { keyword } };
     } catch (error) {
       commit('setShortsLoading', { status: false, message: '' });
-      await Swal.fire(
-        '오류',
-        error.response ? error.response.data.message : error.message,
-        'error',
-      );
+      return { isSuccessful: false, payload: { error } };
     }
   },
 };

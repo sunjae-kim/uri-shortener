@@ -10,7 +10,7 @@
     <sui-form-field required>
       <label>Shortening Keyword</label>
       <div class="ui labeled input left icon">
-        <i id="input--label" class="icon">tisha.me/</i>
+        <i id="input-label" class="icon">tisha.me/</i>
         <input
           v-model="formData.keyword"
           type="text"
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2';
 import { mapActions } from 'vuex';
 import { randomStr } from '@/utils';
 
@@ -45,8 +46,22 @@ export default {
   methods: {
     ...mapActions('shortList', ['createShort']),
     async onFormSubmit() {
-      const isSuccessful = await this.createShort(this.formData);
-      if (isSuccessful) Object.assign(this.$data, this.$options.data());
+      const { isSuccessful, payload } = await this.createShort(this.formData);
+      if (isSuccessful) {
+        await Swal.fire(
+          'tishe.me/' + payload.keyword,
+          '성공적으로 생성되었습니다',
+          'success',
+        );
+        Object.assign(this.$data, this.$options.data());
+      } else {
+        const { error } = payload;
+        await Swal.fire(
+          '오류',
+          error.response ? error.response.data.message : error.message,
+          'error',
+        );
+      }
     },
     generateKeyword() {
       this.formData.keyword = randomStr();
@@ -60,7 +75,7 @@ export default {
   margin-top: 2rem;
 }
 
-#input--label {
+#input-label {
   line-height: inherit;
   margin-left: 1em;
   padding: 0.678571em 0;
@@ -70,7 +85,7 @@ export default {
   opacity: 0.7;
 }
 
-#input--label + input {
+#input-label + input {
   padding-left: 5.2em !important;
   font-weight: normal;
 }

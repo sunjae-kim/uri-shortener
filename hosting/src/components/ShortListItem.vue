@@ -26,16 +26,16 @@
             <button
               class="big ui basic button copy_btn"
               :data-clipboard-text="'https://tisha.me/' + short.keyword"
-              @click="onCopyBtnClick(short.keyword)"
+              @click="onCopy(short.keyword)"
             >
               <i class="clipboard icon" style="color: teal;"></i>
             </button>
-            <button class="big ui basic button" @click="onEditBtnClick(short)">
+            <button class="big ui basic button" @click="onEdit(short)">
               <i class="edit icon" style="color: teal;"></i>
             </button>
             <button
               class="big ui basic button"
-              @click="deleteShort(short.keyword)"
+              @click="onDelete(short.keyword)"
             >
               <i class="trash icon" style="color: firebrick;"></i>
             </button>
@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     ...mapActions('shortList', ['deleteShort', 'updateShort']),
-    onCopyBtnClick(keyword) {
+    onCopy(keyword) {
       Swal.fire({
         icon: 'success',
         title: 'tishe.me/' + keyword,
@@ -67,7 +67,7 @@ export default {
         timer: 1250,
       });
     },
-    async onEditBtnClick(short) {
+    async onEdit(short) {
       const { value } = await Swal.fire({
         title: '수정하기',
         html: `<div style="width: 100%; margin-top: 1em" class="ui labeled input">
@@ -86,7 +86,48 @@ export default {
           ];
         },
       });
-      if (value) this.updateShort([short, value]);
+      if (value) {
+        if (
+          short.keyword === value.keyword &&
+          short.originalUri === value.originalUri
+        ) {
+          return Swal.fire('수정 완료', '변경사항이 없습니다', 'success');
+        }
+
+        const { isSuccessful, payload } = await this.updateShort([
+          short,
+          value,
+        ]);
+        if (isSuccessful) {
+          await Swal.fire(
+            'tishe.me/' + payload.keyword,
+            '성공적으로 수정되었습니다',
+            'success',
+          );
+        } else {
+          const { error } = payload;
+          await Swal.fire(
+            '오류',
+            error.response ? error.response.data.message : error.message,
+            'error',
+          );
+        }
+      }
+    },
+    async onDelete(keyword) {
+      const result = await Swal.fire({
+        title: '정말 삭제하시겠습니까?',
+        text: '삭제한 데이터는 되돌릴 수 없어요',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        confirmButtonText: '삭제하기',
+        cancelButtonText: '취소하기',
+      });
+      if (result.value) {
+        await this.deleteShort(keyword);
+        Swal.fire('삭제 완료', '성공적으로 삭제되었습니다', 'success');
+      }
     },
   },
   filters: {
