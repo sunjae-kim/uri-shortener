@@ -9,20 +9,24 @@
     </sui-form-field>
     <sui-form-field required>
       <label>Shortening Keyword</label>
-      <div class="ui labeled action input left icon">
+      <div class="ui labeled input left icon">
         <i id="input--label" class="icon">tisha.me/</i>
         <input
           v-model="formData.keyword"
           type="text"
           placeholder="등록할 키워드를 입력하세요."
         />
-        <button type="submit" class="ui blue button">Shorten!</button>
       </div>
     </sui-form-field>
-    <span @click="generateKeyword" class="mini ui basic button">
-      <i class="random icon"></i>
-      Random generate
-    </span>
+    <div class="form-btns">
+      <span @click="generateKeyword" class="mini ui basic button">
+        <i class="random icon"></i>
+        Random generate
+      </span>
+      <span class="mini ui button primary">
+        Shorten!
+      </span>
+    </div>
   </sui-form>
 </template>
 
@@ -69,5 +73,13 @@ export default {
 #input--label + input {
   padding-left: 5.2em !important;
   font-weight: normal;
+}
+
+.form-btns {
+  display: flex;
+  justify-content: flex-end;
+}
+.form-btns > span:last-child {
+  margin-right: 0px;
 }
 </style>
