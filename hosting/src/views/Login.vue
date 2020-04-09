@@ -16,7 +16,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Header from '@/components/Header.vue';
+import Header from '@/components/organisms/Header.vue';
 
 export default {
   name: 'Login',

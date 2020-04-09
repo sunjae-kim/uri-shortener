@@ -3,7 +3,7 @@
     <Header />
     <ShortenForm />
     <ShortList />
-    <InfoBtn />
+    <InfoButton />
   </div>
 </template>
 
@@ -12,8 +12,8 @@ import { mapGetters } from 'vuex';
 import ClipboardJS from 'clipboard';
 import ShortenForm from '@/components/ShortenForm.vue';
 import ShortList from '@/components/ShortList.vue';
-import Header from '@/components/Header.vue';
-import InfoBtn from '@/components/InfoBtn.vue';
+import Header from '@/components/organisms/Header.vue';
+import InfoButton from '@/components/molecules/InfoButton.vue';
 
 export default {
   name: 'Home',
@@ -21,7 +21,7 @@ export default {
     ShortenForm,
     ShortList,
     Header,
-    InfoBtn,
+    InfoButton,
   },
   computed: {
     ...mapGetters('user', ['isLoggedIn']),

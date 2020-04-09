@@ -31,14 +31,7 @@
               @mouseenter="btns.copy = true"
               @mouseleave="btns.copy = false"
             >
-              <transition name="fade">
-                <div
-                  v-show="btns.copy"
-                  class="ui basic pointing below label btn-label"
-                >
-                  <p>copy</p>
-                </div>
-              </transition>
+              <Label v-show="btns.copy" text="copy" class="pointing below" />
               <i class="clipboard icon" style="color: teal;"></i>
             </button>
             <!-- Edit Button -->
@@ -48,14 +41,7 @@
               @mouseenter="btns.edit = true"
               @mouseleave="btns.edit = false"
             >
-              <transition name="fade">
-                <div
-                  v-show="btns.edit"
-                  class="ui basic pointing below label btn-label"
-                >
-                  <p>edit</p>
-                </div>
-              </transition>
+              <Label v-show="btns.edit" text="edit" class="pointing below" />
               <i class="edit icon" style="color: teal;"></i>
             </button>
             <!-- Delete Button -->
@@ -65,14 +51,11 @@
               @mouseenter="btns.remove = true"
               @mouseleave="btns.remove = false"
             >
-              <transition name="fade">
-                <div
-                  v-show="btns.remove"
-                  class="ui basic pointing below label btn-label"
-                >
-                  <p>remove</p>
-                </div>
-              </transition>
+              <Label
+                v-show="btns.remove"
+                text="remove"
+                class="pointing below"
+              />
               <i class="trash icon" style="color: firebrick;"></i>
             </button>
           </sui-button-group>
@@ -86,9 +69,13 @@
 import moment from 'moment';
 import Swal from 'sweetalert2';
 import { mapActions } from 'vuex';
+import Label from '@/components/atoms/Label.vue';
 
 export default {
   name: 'ShortListItem',
+  components: {
+    Label,
+  },
   data: () => ({
     btns: {
       copy: false,
@@ -205,9 +192,8 @@ export default {
   justify-content: center;
 }
 
-.btn-label {
-  position: absolute !important;
-  top: -30px;
+.remote-btn .label {
+  top: -25px;
 }
 
 /* Semantic UI Overriding */

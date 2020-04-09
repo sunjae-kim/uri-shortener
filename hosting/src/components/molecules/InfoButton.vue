@@ -1,11 +1,7 @@
 <template>
   <div id="info">
-    <div class="info-box">
-      <transition name="fade">
-        <div v-show="show" class="ui basic label">
-          <p>kimsj9484@gmail.com</p>
-        </div>
-      </transition>
+    <div>
+      <Label v-show="show" text="kimsj9484@gmail.com" />
       <button @click="show = !show" class="big basic circular ui icon button">
         <i class="icon info"></i>
       </button>
@@ -14,8 +10,13 @@
 </template>
 
 <script>
+import Label from '@/components/atoms/Label.vue';
+
 export default {
-  name: 'InfoBtn',
+  name: 'InfoButton',
+  components: {
+    Label,
+  },
   data: () => ({
     show: false,
   }),
@@ -29,17 +30,14 @@ export default {
   right: 5vw;
   text-align: center;
 }
-.info-box {
+#info button {
+  margin: 0;
+}
+#info > div {
   position: relative;
 }
-.info-box > div {
-  display: block;
-  margin-right: 0;
-  position: absolute !important;
+#info .label {
   top: -45px;
   right: -2.5vw;
-}
-#info > button {
-  margin: 0;
 }
 </style>
