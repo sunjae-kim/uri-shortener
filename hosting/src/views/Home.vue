@@ -3,7 +3,6 @@
     <AppHeader />
     <ShortenForm />
     <ShortList />
-    <InfoBtn />
   </div>
 </template>
 
@@ -12,7 +11,6 @@ import { mapGetters } from 'vuex'
 import ClipboardJS from 'clipboard'
 import ShortenForm from '@/components/ShortenForm.vue'
 import ShortList from '@/components/ShortList.vue'
-import InfoBtn from '@/components/InfoBtn.vue'
 import AppHeader from '@/components/AppHeader.vue'
 
 export default {
@@ -26,7 +24,6 @@ export default {
     ShortenForm,
     ShortList,
     AppHeader,
-    InfoBtn,
   },
   computed: {
     ...mapGetters('user', ['isLoggedIn']),

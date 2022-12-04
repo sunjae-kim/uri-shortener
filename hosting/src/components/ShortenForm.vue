@@ -49,20 +49,22 @@ export default {
     async onFormSubmit () {
       const { isSuccessful, payload } = await this.createShort(this.formData)
       if (isSuccessful) {
-        await Swal.fire(
-          'tishe.me/' + payload.keyword,
-          '성공적으로 생성되었습니다',
-          'success',
-        )
+        await Swal.fire({
+          title: `tishe.me/${payload.keyword}`,
+          html: '성공적으로 생성되었습니다',
+          icon: 'success',
+          scrollbarPadding: false,
+        })
         this.$data.formData.keyword = ''
         this.$data.formData.originalUri = ''
       } else {
         const { error } = payload
-        await Swal.fire(
-          '오류',
-          error.response ? error.response.data.message : error.message,
-          'error',
-        )
+        await Swal.fire({
+          title: '오류',
+          html: error.response ? error.response.data.message : error.message,
+          icon: 'error',
+          scrollbarPadding: false,
+        })
       }
     },
     generateKeyword () {

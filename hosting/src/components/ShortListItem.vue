@@ -10,9 +10,9 @@
               <span class="secondary-text">{{ createdAt }}</span>
               <span class="secondary-text">visited: {{ short.view || 0 }}</span>
             </span>
-            <div class="ui sub header text-wrap">
+            <div class="sub header text-wrap">
               <a target="_blank" :href="short.originalUri">
-                <i class="m-0 arrows icon"></i>
+                <i class="m-0 linkify icon"></i>
                 {{ short.originalUri }}
               </a>
             </div>
@@ -115,14 +115,10 @@ export default {
             <h4 style="margin-bottom: 0.4em;">tishe.me/${keyword}</h4>
             <p>클립보드에 복사되었습니다</p>
           </div>`,
+        scrollbarPadding: false,
       })
     },
     async onEdit (short: Short) {
-      const keywordEl = document.getElementById(
-        'updating-keyword',
-      ) as HTMLInputElement
-      const uriEl = document.getElementById('updating-uri') as HTMLInputElement
-      if (!keywordEl || !uriEl) return
       const result = await Swal.fire({
         title: '수정하기',
         html: `<div style="width: 100%; margin-top: 1em" class="ui labeled input">
@@ -135,8 +131,16 @@ export default {
         focusConfirm: false,
         confirmButtonText: '확인',
         preConfirm: () => {
+          const keywordEl = document.getElementById(
+            'updating-keyword',
+          ) as HTMLInputElement
+          const uriEl = document.getElementById(
+            'updating-uri',
+          ) as HTMLInputElement
+          if (!keywordEl || !uriEl) return
           return [keywordEl.value, uriEl.value]
         },
+        scrollbarPadding: false,
       })
 
       // TODO: 타입 잡기
@@ -146,23 +150,30 @@ export default {
           short.keyword === value.keyword &&
           short.originalUri === value.originalUri
         ) {
-          return Swal.fire('수정 완료', '변경사항이 없습니다', 'success')
+          return Swal.fire({
+            title: '수정 완료',
+            html: '변경사항이 없습니다',
+            icon: 'success',
+            scrollbarPadding: false,
+          })
         }
 
         const { isSuccessful, payload } = await this.updateShort([short, value])
         if (isSuccessful) {
-          await Swal.fire(
-            'tishe.me/' + payload.keyword,
-            '성공적으로 수정되었습니다',
-            'success',
-          )
+          await Swal.fire({
+            title: `tishe.me/${payload.keyword}`,
+            html: '성공적으로 수정되었습니다',
+            icon: 'success',
+            scrollbarPadding: false,
+          })
         } else {
           const { error } = payload
-          await Swal.fire(
-            '오류',
-            error.response ? error.response.data.message : error.message,
-            'error',
-          )
+          await Swal.fire({
+            title: '오류',
+            html: error.response ? error.response.data.message : error.message,
+            icon: 'error',
+            scrollbarPadding: false,
+          })
         }
       }
     },
@@ -178,7 +189,12 @@ export default {
       })
       if (result.value) {
         await this.deleteShort(keyword)
-        Swal.fire('삭제 완료', '성공적으로 삭제되었습니다', 'success')
+        Swal.fire({
+          title: '삭제완료',
+          html: '성공적으로 삭제되었습니다',
+          icon: 'success',
+          scrollbarPadding: false,
+        })
       }
     },
   },

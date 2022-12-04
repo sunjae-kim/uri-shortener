@@ -28,6 +28,9 @@ export default {
 
 <style>
 /* Global */
+body {
+  overflow-y: overlay;
+}
 .text-wrap {
   text-overflow: ellipsis;
   overflow: hidden;
@@ -51,6 +54,18 @@ export default {
 .fade-enter,
 .fade-leave-to {
   opacity: 0 !important;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #dedede;
+  border-radius: 20px;
 }
 
 /* Semantic UI Overriding */

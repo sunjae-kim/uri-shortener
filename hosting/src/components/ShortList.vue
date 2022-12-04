@@ -5,7 +5,7 @@
         <div class="ui text loader">{{ loading.message }}</div>
       </div>
     </teleport>
-    <li class="ui divied relaxed list">
+    <li class="ui divided list">
       <ul v-for="short in orderedShortList" class="item" :key="short.keyword">
         <ShortListItem :short="short" />
       </ul>

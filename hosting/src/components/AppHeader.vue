@@ -1,12 +1,9 @@
 <template>
-  <div class="ui container" id="header" text-align="right">
+  <div class="ui right aligned container" id="header">
     <button v-if="isLoggedIn" class="mini ui button" @click="signOut">
       Sign out
     </button>
-    <h1 class="ui huge center aligned header">
-      <img :src="assets.logo" alt="cat icon" class="ui small image" />
-      tisha.me
-    </h1>
+    <h1 class="ui huge center aligned header">😸 tisha.me</h1>
   </div>
 </template>
 

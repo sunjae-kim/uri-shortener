@@ -1,8 +1,7 @@
 import { shortListRef } from '@/database'
 import axios from 'axios'
-import { child, get, remove, set } from 'firebase/database'
+import { child, get, onValue, remove, set } from 'firebase/database'
 import { Module } from 'vuex'
-import { firebaseAction } from 'vuexfire'
 import { RootState } from '..'
 import { Short } from '../../../../types/entity'
 
@@ -34,15 +33,18 @@ const module: Module<ShortListState, RootState> = {
     },
   },
   mutations: {
+    setData (state, payload: Record<string, Short>) {
+      state.data = payload
+    },
     setShortsLoading (state, payload) {
       state.loading = payload
     },
   },
   actions: {
-    // bindShortList: firebaseAction(async ({ commit, bindFirebaseRef }) => {
-    //   await bindFirebaseRef('data', shortListRef)
-    //   commit('setShortsLoading', { status: false, message: '' })
-    // }),
+    bindShortList ({ commit }) {
+      onValue(shortListRef, snapshot => commit('setData', snapshot.toJSON()))
+      commit('setShortsLoading', { status: false, message: '' })
+    },
     async createShort ({ commit, getters }, { originalUri, keyword }) {
       try {
         commit('setShortsLoading', {
