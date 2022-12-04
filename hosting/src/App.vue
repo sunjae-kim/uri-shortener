@@ -7,8 +7,8 @@
   </sui-dimmer>
 </template>
 
-<script>
-import { mapState, mapActions } from 'vuex';
+<script lang="ts">
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'App',
@@ -18,13 +18,10 @@ export default {
   methods: {
     ...mapActions('user', ['onAuthStateChanged']),
   },
-  created() {
-    const { current, pending } = this.$router.history;
-    if (pending && pending.name === 'invalid') return;
-    if (current && current.name === 'invalid') return;
-    this.onAuthStateChanged();
+  created () {
+    this.onAuthStateChanged()
   },
-};
+}
 </script>
 
 <style>

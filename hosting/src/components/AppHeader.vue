@@ -4,26 +4,27 @@
       >Sign out</sui-button
     >
     <h1 size="huge" is="sui-header" text-align="center">
-      <sui-image :src="logoImage" size="small" />tisha.me
+      <sui-image :src="assets.logo" size="small" />tisha.me
     </h1>
   </sui-container>
 </template>
 
-<script>
-import { mapActions, mapGetters } from 'vuex';
+<script lang="ts">
+import assets from '@/assets'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
-  name: 'Header',
-  data: () => ({
-    logoImage: require('public/logo.png').default,
-  }),
+  name: 'AppHeader',
+  data () {
+    return { assets }
+  },
   computed: {
     ...mapGetters('user', ['isLoggedIn']),
   },
   methods: {
     ...mapActions('user', ['signOut']),
   },
-};
+}
 </script>
 
 <style>

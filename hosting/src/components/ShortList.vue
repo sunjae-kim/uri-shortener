@@ -14,9 +14,9 @@
   </section>
 </template>
 
-<script>
-import { mapState, mapGetters } from 'vuex';
-import ShortListItem from '@/components/ShortListItem.vue';
+<script lang="ts">
+import { mapState, mapGetters } from 'vuex'
+import ShortListItem from '@/components/ShortListItem.vue'
 
 export default {
   name: 'ShortList',
@@ -27,7 +27,7 @@ export default {
     ...mapState('shortList', ['loading']),
     ...mapGetters('shortList', ['orderedShortList']),
   },
-};
+}
 </script>
 
 <style>

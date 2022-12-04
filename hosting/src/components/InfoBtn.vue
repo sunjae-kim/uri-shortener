@@ -13,13 +13,13 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: 'InfoBtn',
   data: () => ({
     show: false,
   }),
-};
+}
 </script>
 
 <style>

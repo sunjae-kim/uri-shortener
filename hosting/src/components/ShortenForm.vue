@@ -23,17 +23,15 @@
         <i class="random icon"></i>
         Random generate
       </span>
-      <button class="mini ui button primary">
-        Shorten!
-      </button>
+      <button class="mini ui button primary">Shorten!</button>
     </div>
   </sui-form>
 </template>
 
-<script>
-import Swal from 'sweetalert2';
-import { mapActions } from 'vuex';
-import { randomStr } from '@/utils';
+<script lang="ts">
+import { randomStr } from '@/utils'
+import Swal from 'sweetalert2'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'ShortenForm',
@@ -45,29 +43,30 @@ export default {
   }),
   methods: {
     ...mapActions('shortList', ['createShort']),
-    async onFormSubmit() {
-      const { isSuccessful, payload } = await this.createShort(this.formData);
+    async onFormSubmit () {
+      const { isSuccessful, payload } = await this.createShort(this.formData)
       if (isSuccessful) {
         await Swal.fire(
           'tishe.me/' + payload.keyword,
           '성공적으로 생성되었습니다',
           'success',
-        );
-        Object.assign(this.$data, this.$options.data());
+        )
+        this.$data.formData.keyword = ''
+        this.$data.formData.originalUri = ''
       } else {
-        const { error } = payload;
+        const { error } = payload
         await Swal.fire(
           '오류',
           error.response ? error.response.data.message : error.message,
           'error',
-        );
+        )
       }
     },
-    generateKeyword() {
-      this.formData.keyword = randomStr();
+    generateKeyword () {
+      this.formData.keyword = randomStr()
     },
   },
-};
+}
 </script>
 <style>
 #shorten-form {

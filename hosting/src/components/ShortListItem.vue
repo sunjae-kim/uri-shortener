@@ -7,9 +7,7 @@
           <h3 is="sui-header">
             <span class="item-header">
               {{ short.keyword }}
-              <span class="secondary-text">{{
-                short.createdAt | formatDate
-              }}</span>
+              <span class="secondary-text">{{ createdAt }}</span>
               <span class="secondary-text">visited: {{ short.view || 0 }}</span>
             </span>
             <sui-header-subheader class="text-wrap">
@@ -39,7 +37,7 @@
                   <p>copy</p>
                 </div>
               </transition>
-              <i class="clipboard icon" style="color: teal;"></i>
+              <i class="clipboard icon" style="color: teal"></i>
             </button>
             <!-- Edit Button -->
             <button
@@ -56,7 +54,7 @@
                   <p>edit</p>
                 </div>
               </transition>
-              <i class="edit icon" style="color: teal;"></i>
+              <i class="edit icon" style="color: teal"></i>
             </button>
             <!-- Delete Button -->
             <button
@@ -73,7 +71,7 @@
                   <p>remove</p>
                 </div>
               </transition>
-              <i class="trash icon" style="color: firebrick;"></i>
+              <i class="trash icon" style="color: firebrick"></i>
             </button>
           </sui-button-group>
         </sui-grid-column>
@@ -82,10 +80,12 @@
   </sui-list-content>
 </template>
 
-<script>
-import moment from 'moment';
-import Swal from 'sweetalert2';
-import { mapActions } from 'vuex';
+<script lang="ts">
+import moment from 'moment'
+import Swal from 'sweetalert2'
+import { PropType } from 'vue'
+import { mapActions } from 'vuex'
+import { Short } from '../../../types/entity'
 
 export default {
   name: 'ShortListItem',
@@ -97,17 +97,17 @@ export default {
     },
   }),
   props: {
-    short: Object,
+    short: { type: Object as PropType<Short>, required: true },
   },
   methods: {
     ...mapActions('shortList', ['deleteShort', 'updateShort']),
-    onCopy(keyword) {
+    onCopy (keyword: string) {
       const Toast = Swal.mixin({
         toast: true,
         position: 'bottom-end',
         showConfirmButton: false,
         timer: 3000,
-      });
+      })
 
       Toast.fire({
         icon: 'success',
@@ -115,10 +115,15 @@ export default {
             <h4 style="margin-bottom: 0.4em;">tishe.me/${keyword}</h4>
             <p>클립보드에 복사되었습니다</p>
           </div>`,
-      });
+      })
     },
-    async onEdit(short) {
-      const { value } = await Swal.fire({
+    async onEdit (short: Short) {
+      const keywordEl = document.getElementById(
+        'updating-keyword',
+      ) as HTMLInputElement
+      const uriEl = document.getElementById('updating-uri') as HTMLInputElement
+      if (!keywordEl || !uriEl) return
+      const result = await Swal.fire({
         title: '수정하기',
         html: `<div style="width: 100%; margin-top: 1em" class="ui labeled input">
             <div class="ui label">tisha.me/</div>
@@ -130,41 +135,38 @@ export default {
         focusConfirm: false,
         confirmButtonText: '확인',
         preConfirm: () => {
-          return [
-            document.getElementById('updating-keyword').value,
-            document.getElementById('updating-uri').value,
-          ];
+          return [keywordEl.value, uriEl.value]
         },
-      });
+      })
+
+      // TODO: 타입 잡기
+      const value = result.value as any
       if (value) {
         if (
           short.keyword === value.keyword &&
           short.originalUri === value.originalUri
         ) {
-          return Swal.fire('수정 완료', '변경사항이 없습니다', 'success');
+          return Swal.fire('수정 완료', '변경사항이 없습니다', 'success')
         }
 
-        const { isSuccessful, payload } = await this.updateShort([
-          short,
-          value,
-        ]);
+        const { isSuccessful, payload } = await this.updateShort([short, value])
         if (isSuccessful) {
           await Swal.fire(
             'tishe.me/' + payload.keyword,
             '성공적으로 수정되었습니다',
             'success',
-          );
+          )
         } else {
-          const { error } = payload;
+          const { error } = payload
           await Swal.fire(
             '오류',
             error.response ? error.response.data.message : error.message,
             'error',
-          );
+          )
         }
       }
     },
-    async onDelete(keyword) {
+    async onDelete (keyword: string) {
       const result = await Swal.fire({
         title: '정말 삭제하시겠습니까?',
         text: '삭제한 데이터는 되돌릴 수 없어요',
@@ -173,17 +175,22 @@ export default {
         confirmButtonColor: '#d33',
         confirmButtonText: '삭제하기',
         cancelButtonText: '취소하기',
-      });
+      })
       if (result.value) {
-        await this.deleteShort(keyword);
-        Swal.fire('삭제 완료', '성공적으로 삭제되었습니다', 'success');
+        await this.deleteShort(keyword)
+        Swal.fire('삭제 완료', '성공적으로 삭제되었습니다', 'success')
       }
     },
   },
   filters: {
-    formatDate: timestamp => moment(timestamp).fromNow(),
+    formatDate: (timestamp: number) => moment(timestamp).fromNow(),
   },
-};
+  computed: {
+    createdAt () {
+      return moment(this.short.createdAt).fromNow()
+    },
+  },
+}
 </script>
 
 <style>

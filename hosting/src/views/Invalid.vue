@@ -4,7 +4,7 @@
       <h1 is="sui-header">
         요청하신 페이지를 찾을 수 없습니다.
         <sui-header-subheader v-if="keyword"
-          >{{ keyword | applyJosa }} 등록되지 않은
+          >{{ applyJosa(keyword) }} 등록되지 않은
           경로입니다.</sui-header-subheader
         >
       </h1>
@@ -13,21 +13,22 @@
   </sui-container>
 </template>
 
-<script>
-import { applyJosa, replaceURI } from '@/utils';
+<script lang="ts">
+import { applyJosa, replaceURI } from '@/utils'
 
 export default {
   name: 'Invalid',
   props: {
     keyword: String,
   },
-  filters: {
+  created () {
+    if (!this.keyword) return
+    replaceURI(this.keyword)
+  },
+  methods: {
     applyJosa,
   },
-  created() {
-    replaceURI(this.keyword);
-  },
-};
+}
 </script>
 
 <style></style>
