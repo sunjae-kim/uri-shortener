@@ -1,33 +1,29 @@
-import store from '@/stores'
+import { ROUTE_NAMES } from '@/utils/router/types'
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-const Home = () => import('@/views/Home.vue')
-const Login = () => import('@/views/Login.vue')
-const Invalid = () => import('@/views/Invalid.vue')
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    name: 'home',
-    component: Home,
+    name: ROUTE_NAMES.HOME,
+    component: () => import('@/views/Home.vue'),
   },
   {
-    path: '/login',
-    name: 'login',
-    component: Login,
+    path: '/sign-in',
+    name: ROUTE_NAMES.SIGN_IN,
+    component: () => import('@/views/Login.vue'),
   },
   {
     path: '/invalid',
-    name: 'invalid',
-    component: Invalid,
-    props: route => ({ keyword: route.query.keyword }),
-    beforeEnter: (to, from, next) => {
-      store.commit('user/setUserLoading', false)
-      next()
-    },
+    name: ROUTE_NAMES.INVALID,
+    component: () => import('@/views/Invalid.vue'),
   },
 ]
 
 export default createRouter({
   history: createWebHistory(),
   routes,
+  scrollBehavior: (to, from, savedPosition) => {
+    if (savedPosition) return savedPosition
+    return { left: 0, top: 0, behavior: 'smooth' }
+  },
 })

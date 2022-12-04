@@ -1,13 +1,13 @@
 <template>
-  <div class="ui container" v-if="!isLoggedIn" id="login">
+  <div class="ui container" v-if="!userStore.state.data" id="login">
     <section class="centered-screen">
       <AppHeader />
       <button
         id="google-login-btn"
         class="ui basic button"
-        @click="signInWithGoogle"
+        @click="userStore.signInWithGoogle"
       >
-        <img :src="assets.google" />
+        <img :src="googleLogo" />
         Sign in with Google
       </button>
     </section>
@@ -17,21 +17,17 @@
 <script lang="ts">
 import assets from '@/assets'
 import AppHeader from '@/components/AppHeader.vue'
-import { mapActions, mapGetters } from 'vuex'
+import useUserStore from '@/stores/user'
 
 export default {
   name: 'Login',
-  data () {
-    return { assets }
-  },
-  components: {
-    AppHeader,
-  },
-  computed: {
-    ...mapGetters('user', ['isLoggedIn']),
-  },
-  methods: {
-    ...mapActions('user', ['signInWithGoogle']),
+  components: { AppHeader },
+  setup () {
+    const userStore = useUserStore()
+    return {
+      userStore,
+      googleLogo: assets.google,
+    }
   },
 }
 </script>

@@ -32,9 +32,9 @@
 </template>
 
 <script lang="ts">
-import { randomStr } from '@/utils'
+import useShortStore from '@/stores/short'
 import Swal from 'sweetalert2'
-import { mapActions } from 'vuex'
+const ShortStore = useShortStore()
 
 export default {
   name: 'ShortenForm',
@@ -45,9 +45,8 @@ export default {
     },
   }),
   methods: {
-    ...mapActions('shortList', ['createShort']),
     async onFormSubmit () {
-      const { isSuccessful, payload } = await this.createShort(this.formData)
+      const { isSuccessful, payload } = await ShortStore.create(this.formData)
       if (isSuccessful) {
         await Swal.fire({
           title: `tishe.me/${payload.keyword}`,
@@ -58,7 +57,7 @@ export default {
         this.$data.formData.keyword = ''
         this.$data.formData.originalUri = ''
       } else {
-        const { error } = payload
+        const error = payload.error as any
         await Swal.fire({
           title: '오류',
           html: error.response ? error.response.data.message : error.message,
@@ -68,7 +67,7 @@ export default {
       }
     },
     generateKeyword () {
-      this.formData.keyword = randomStr()
+      this.formData.keyword = Math.random().toString(36).substring(2, 7)
     },
   },
 }

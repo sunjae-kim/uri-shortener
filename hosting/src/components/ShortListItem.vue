@@ -81,11 +81,12 @@
 </template>
 
 <script lang="ts">
+import useShortStore from '@/stores/short'
 import moment from 'moment'
 import Swal from 'sweetalert2'
 import { PropType } from 'vue'
-import { mapActions } from 'vuex'
 import { Short } from '../../../types/entity'
+const shortStore = useShortStore()
 
 export default {
   name: 'ShortListItem',
@@ -100,13 +101,13 @@ export default {
     short: { type: Object as PropType<Short>, required: true },
   },
   methods: {
-    ...mapActions('shortList', ['deleteShort', 'updateShort']),
     onCopy (keyword: string) {
       const Toast = Swal.mixin({
         toast: true,
         position: 'bottom-end',
         showConfirmButton: false,
         timer: 3000,
+        scrollbarPadding: false,
       })
 
       Toast.fire({
@@ -115,7 +116,6 @@ export default {
             <h4 style="margin-bottom: 0.4em;">tishe.me/${keyword}</h4>
             <p>클립보드에 복사되었습니다</p>
           </div>`,
-        scrollbarPadding: false,
       })
     },
     async onEdit (short: Short) {
@@ -146,10 +146,8 @@ export default {
       // TODO: 타입 잡기
       const value = result.value as any
       if (value) {
-        if (
-          short.keyword === value.keyword &&
-          short.originalUri === value.originalUri
-        ) {
+        const [keyword, originalUri] = value
+        if (short.keyword === keyword && short.originalUri === originalUri) {
           return Swal.fire({
             title: '수정 완료',
             html: '변경사항이 없습니다',
@@ -158,7 +156,11 @@ export default {
           })
         }
 
-        const { isSuccessful, payload } = await this.updateShort([short, value])
+        const { isSuccessful, payload } = await shortStore.update({
+          short,
+          keyword,
+          originalUri,
+        })
         if (isSuccessful) {
           await Swal.fire({
             title: `tishe.me/${payload.keyword}`,
@@ -167,7 +169,7 @@ export default {
             scrollbarPadding: false,
           })
         } else {
-          const { error } = payload
+          const error = payload.error as any
           await Swal.fire({
             title: '오류',
             html: error.response ? error.response.data.message : error.message,
@@ -186,9 +188,10 @@ export default {
         confirmButtonColor: '#d33',
         confirmButtonText: '삭제하기',
         cancelButtonText: '취소하기',
+        scrollbarPadding: false,
       })
       if (result.value) {
-        await this.deleteShort(keyword)
+        await shortStore.delete({ keyword })
         Swal.fire({
           title: '삭제완료',
           html: '성공적으로 삭제되었습니다',

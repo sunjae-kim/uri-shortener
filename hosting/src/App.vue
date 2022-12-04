@@ -1,27 +1,29 @@
 <template>
-  <div v-if="!loading" class="ui container">
+  <div v-if="!loadingStore.state" class="ui container">
     <router-view />
   </div>
   <teleport v-else to="body">
     <div class="ui active dimmer inverted">
-      <div class="ui text loader">사용자 정보를 가져오는 중입니다..</div>
+      <div class="ui text loader">{{ loadingStore.message }}</div>
     </div>
   </teleport>
 </template>
 
 <script lang="ts">
-import { mapActions, mapState } from 'vuex'
+import { useLoadingStore } from './stores/loading'
+import useShortStore from './stores/short'
+import useUserStore from './stores/user'
 
 export default {
   name: 'App',
-  computed: {
-    ...mapState('user', ['loading']),
-  },
-  methods: {
-    ...mapActions('user', ['onAuthStateChanged']),
-  },
-  created () {
-    this.onAuthStateChanged()
+  setup () {
+    const loadingStore = useLoadingStore()
+    const shortStore = useShortStore()
+    const userStore = useUserStore()
+    shortStore.init()
+    userStore.init()
+
+    return { loadingStore }
   },
 }
 </script>

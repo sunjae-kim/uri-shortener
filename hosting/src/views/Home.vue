@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isLoggedIn">
+  <div v-if="user.state.data">
     <AppHeader />
     <ShortenForm />
     <ShortList />
@@ -7,29 +7,25 @@
 </template>
 
 <script lang="ts">
-import { mapGetters } from 'vuex'
 import ClipboardJS from 'clipboard'
 import ShortenForm from '@/components/ShortenForm.vue'
 import ShortList from '@/components/ShortList.vue'
 import AppHeader from '@/components/AppHeader.vue'
+import useUserStore from '@/stores/user'
 
 export default {
   name: 'Home',
-  data () {
-    return {
-      clipboardJs: null as null | ClipboardJS,
-    }
-  },
   components: {
     ShortenForm,
     ShortList,
     AppHeader,
   },
-  computed: {
-    ...mapGetters('user', ['isLoggedIn']),
-  },
-  mounted () {
-    this.clipboardJs = new ClipboardJS('.copy_btn')
+  setup () {
+    const userStore = useUserStore()
+    return {
+      clipboardJs: new ClipboardJS('.copy_btn'),
+      user: userStore,
+    }
   },
 }
 </script>

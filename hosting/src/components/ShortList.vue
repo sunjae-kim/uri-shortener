@@ -1,15 +1,15 @@
 <template>
   <section id="short-list">
-    <teleport v-if="loading.status" to="body">
+    <teleport v-if="loading.state" to="body">
       <div class="ui active dimmer inverted">
         <div class="ui text loader">{{ loading.message }}</div>
       </div>
     </teleport>
     <li class="ui divided list">
-      <ul v-for="short in orderedShortList" class="item" :key="short.keyword">
+      <ul v-for="short in shortList" class="item" :key="short.keyword">
         <ShortListItem :short="short" />
       </ul>
-      <p v-if="orderedShortList.length === 0">
+      <p v-if="shortList.length === 0">
         위 폼을 통해 첫번째 URI를 만들어 보세요!
       </p>
     </li>
@@ -17,8 +17,11 @@
 </template>
 
 <script lang="ts">
-import { mapState, mapGetters } from 'vuex'
 import ShortListItem from '@/components/ShortListItem.vue'
+import { useLoadingStore } from '@/stores/loading'
+import useShortStore from '@/stores/short'
+const loadingStore = useLoadingStore()
+const shortStore = useShortStore()
 
 export default {
   name: 'ShortList',
@@ -26,8 +29,12 @@ export default {
     ShortListItem,
   },
   computed: {
-    ...mapState('shortList', ['loading']),
-    ...mapGetters('shortList', ['orderedShortList']),
+    loading () {
+      return loadingStore.$state
+    },
+    shortList () {
+      return shortStore.list
+    },
   },
 }
 </script>
