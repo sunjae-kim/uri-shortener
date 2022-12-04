@@ -1,16 +1,18 @@
 <template>
   <section id="short-list">
-    <sui-dimmer v-if="loading.status" active inverted>
-      <sui-loader :content="loading.message" />
-    </sui-dimmer>
-    <sui-list v-else divided relaxed>
-      <sui-list-item v-for="short in orderedShortList" :key="short.keyword">
+    <teleport v-if="loading.status" to="body">
+      <div class="ui active dimmer inverted">
+        <div class="ui text loader">{{ loading.message }}</div>
+      </div>
+    </teleport>
+    <li class="ui divied relaxed list">
+      <ul v-for="short in orderedShortList" class="item" :key="short.keyword">
         <ShortListItem :short="short" />
-      </sui-list-item>
+      </ul>
       <p v-if="orderedShortList.length === 0">
         위 폼을 통해 첫번째 URI를 만들어 보세요!
       </p>
-    </sui-list>
+    </li>
   </section>
 </template>
 

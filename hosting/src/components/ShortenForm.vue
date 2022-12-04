@@ -1,13 +1,16 @@
 <template>
-  <sui-form id="shorten-form" @submit.prevent="onFormSubmit">
-    <sui-form-field required>
+  <form id="shorten-form" class="ui form" @submit.prevent="onFormSubmit">
+    <div class="required field">
       <label>Original URI</label>
-      <sui-input
-        v-model="formData.originalUri"
-        placeholder="https://original-uri.com"
-      />
-    </sui-form-field>
-    <sui-form-field required>
+      <div class="ui input">
+        <input
+          type="text"
+          v-model="formData.originalUri"
+          placeholder="https://original-uri.com"
+        />
+      </div>
+    </div>
+    <div class="required field">
       <label>Shortening Keyword</label>
       <div class="ui labeled input left icon">
         <i id="input-label" class="icon">tisha.me/</i>
@@ -17,7 +20,7 @@
           placeholder="등록할 키워드를 입력하세요."
         />
       </div>
-    </sui-form-field>
+    </div>
     <div class="form-btns">
       <span @click="generateKeyword" class="mini ui basic button">
         <i class="random icon"></i>
@@ -25,7 +28,7 @@
       </span>
       <button class="mini ui button primary">Shorten!</button>
     </div>
-  </sui-form>
+  </form>
 </template>
 
 <script lang="ts">

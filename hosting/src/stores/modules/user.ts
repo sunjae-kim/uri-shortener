@@ -52,12 +52,12 @@ const module: Module<UserState, RootState> = {
       signInWithRedirect(auth, provider)
     },
     redirect ({ getters, dispatch }) {
-      // const { path } = router.currentRoute.value
-      // if (getters.isLoggedIn) {
-      //   dispatch('shortList/bindShortList', null, { root: true })
-      //   if (path !== '/') router.push('/')
-      // }
-      // if (!getters.isLoggedIn && path !== '/login') router.push('/login')
+      const { path } = router.currentRoute.value
+      if (getters.isLoggedIn) {
+        dispatch('shortList/bindShortList', null, { root: true })
+        if (path !== '/') router.push('/')
+      }
+      if (!getters.isLoggedIn && path !== '/login') router.push('/login')
     },
     onAuthStateChanged ({ commit, dispatch }) {
       onAuthStateChanged(auth, user => {

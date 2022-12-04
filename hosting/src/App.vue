@@ -1,10 +1,12 @@
 <template>
-  <sui-container v-if="!loading" id="app">
+  <div v-if="!loading" class="ui container">
     <router-view />
-  </sui-container>
-  <sui-dimmer v-else active inverted>
-    <sui-loader content="사용자 정보를 가져오는 중입니다.." />
-  </sui-dimmer>
+  </div>
+  <teleport v-else to="body">
+    <div class="ui active dimmer inverted">
+      <div class="ui text loader">사용자 정보를 가져오는 중입니다..</div>
+    </div>
+  </teleport>
 </template>
 
 <script lang="ts">

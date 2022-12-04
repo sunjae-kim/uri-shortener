@@ -1,26 +1,26 @@
 <template>
-  <sui-list-content>
-    <sui-grid stackable>
-      <sui-grid-row :columns="2">
+  <div class="content">
+    <div class="ui stackable grid">
+      <div class="two column row">
         <!-- Content -->
-        <sui-grid-column>
-          <h3 is="sui-header">
+        <div class="column">
+          <h3 class="ui header">
             <span class="item-header">
               {{ short.keyword }}
               <span class="secondary-text">{{ createdAt }}</span>
               <span class="secondary-text">visited: {{ short.view || 0 }}</span>
             </span>
-            <sui-header-subheader class="text-wrap">
+            <div class="ui sub header text-wrap">
               <a target="_blank" :href="short.originalUri">
-                <sui-icon class="m-0" name="linkify" />
+                <i class="m-0 arrows icon"></i>
                 {{ short.originalUri }}
               </a>
-            </sui-header-subheader>
+            </div>
           </h3>
-        </sui-grid-column>
+        </div>
         <!-- Buttons -->
-        <sui-grid-column text-align="right">
-          <sui-button-group icons>
+        <div class="column right aligned">
+          <div class="ui icon buttons">
             <!-- Copy Button -->
             <button
               class="big ui basic button copy_btn remote-btn"
@@ -73,11 +73,11 @@
               </transition>
               <i class="trash icon" style="color: firebrick"></i>
             </button>
-          </sui-button-group>
-        </sui-grid-column>
-      </sui-grid-row>
-    </sui-grid>
-  </sui-list-content>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">

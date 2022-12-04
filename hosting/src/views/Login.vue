@@ -1,5 +1,5 @@
 <template>
-  <sui-container v-if="!isLoggedIn" id="login">
+  <div class="ui container" v-if="!isLoggedIn" id="login">
     <section class="centered-screen">
       <AppHeader />
       <button
@@ -11,7 +11,7 @@
         Sign in with Google
       </button>
     </section>
-  </sui-container>
+  </div>
 </template>
 
 <script lang="ts">

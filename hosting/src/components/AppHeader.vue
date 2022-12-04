@@ -1,12 +1,13 @@
 <template>
-  <sui-container id="header" text-align="right">
-    <sui-button v-if="isLoggedIn" size="mini" @click="signOut"
-      >Sign out</sui-button
-    >
-    <h1 size="huge" is="sui-header" text-align="center">
-      <sui-image :src="assets.logo" size="small" />tisha.me
+  <div class="ui container" id="header" text-align="right">
+    <button v-if="isLoggedIn" class="mini ui button" @click="signOut">
+      Sign out
+    </button>
+    <h1 class="ui huge center aligned header">
+      <img :src="assets.logo" alt="cat icon" class="ui small image" />
+      tisha.me
     </h1>
-  </sui-container>
+  </div>
 </template>
 
 <script lang="ts">
@@ -29,6 +30,6 @@ export default {
 
 <style>
 #header {
-  margin: 1rem 0;
+  padding: 1rem 0;
 }
 </style>
